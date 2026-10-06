@@ -12,13 +12,13 @@ It shows who has each book, in what condition it left, and whether it has been r
 | condition | fixed values | new, good, worn                              |
 | category  | relation     | Novel, Poetry, Non-fiction                   |
 | user      | relation     | the owner of the book (from week 11)         |
-| borrower  | text         | optional, the person who borrowed the book   |
+| borrower  | text         | optional, max 50 chars, who borrowed it      |
 
 Sample data used across all stages:
 
-1. Enigma Otiliei, active (lent), good
-2. Maitreyi, done (returned), new
-3. Ion, active (lent), worn
+1. Enigma Otiliei, active (lent), good, borrower Ana
+2. Maitreyi, done (returned), new, borrower Mihai
+3. Ion, active (lent), worn, borrower Ioana
 
 ## How to run
 
@@ -28,7 +28,7 @@ Open `index.html` in a browser. No build step, no server.
 
 | Tool   | Used for                                                          |
 | ------ | ----------------------------------------------------------------- |
-| Claude | drafting the README, stage 1          |
+| Claude | drafting the README, HTML/CSS mockup (stage 1)                    |
 
 Details per stage: see the `ai-log/` folder.
 

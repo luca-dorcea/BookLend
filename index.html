@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BookLend - mockup</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>BookLend</h1>
+    <p>Ține evidența cărților împrumutate prietenilor și familiei.</p>
+    <p class="app-count">3 cărți, dintre care 2 împrumutate</p>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>Împrumută o carte</h2>
+      <form class="item-form">
+        <label>Titlul cărții
+          <input type="text" name="title" placeholder="Ex: Baltagul" maxlength="100" required />
+        </label>
+        <label>Cititor
+          <input type="text" name="borrower" placeholder="Ex: Radu (opțional)" maxlength="50" />
+        </label>
+        <label>Starea cărții
+          <select name="condition">
+            <option value="new">Nouă</option>
+            <option value="good" selected>Bună</option>
+            <option value="worn">Uzată</option>
+          </select>
+        </label>
+        <button type="submit">Adaugă</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Cărțile mele împrumutate</h2>
+      <!-- Când lista e goală: <p class="empty">Nu ai împrumutat încă nicio carte.</p> -->
+      <ul class="item-list">
+        <li class="item-card">
+          <div>
+            <h3>Enigma Otiliei</h3>
+            <p class="borrower">Cititor: Ana</p>
+            <span class="badge badge-good">Stare: bună</span>
+          </div>
+          <span class="status">Împrumutată</span>
+        </li>
+        <li class="item-card done">
+          <div>
+            <h3>Maitreyi</h3>
+            <p class="borrower">Cititor: Mihai</p>
+            <span class="badge badge-new">Stare: nouă</span>
+          </div>
+          <span class="status">Returnată</span>
+        </li>
+        <li class="item-card">
+          <div>
+            <h3>Ion</h3>
+            <p class="borrower">Cititor: Ioana</p>
+            <span class="badge badge-worn">Stare: uzată</span>
+          </div>
+          <span class="status">Împrumutată</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="app-footer">Proiect Tehnologii Web</footer>
+</body>
+</html>
