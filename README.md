@@ -58,3 +58,15 @@ Functions: `listTitles`, `countLent`, `searchBooks` (title or borrower), `nextId
 | S1-R6 | 2 columns on desktop, 1 under 700px                  | [style.css#L51-L59 (grid)](https://github.com/luca-dorcea/BookLend/blob/9343cba4fa2daf31323be531dd91a9651a32bb8d/style.css#L51-L59), [style.css#L205-L207 (@media)](https://github.com/luca-dorcea/BookLend/blob/9343cba4fa2daf31323be531dd91a9651a32bb8d/style.css#L205-L207) | resize < 700px |
 | S1-R7 | visible focus, readable dark theme                   | [style.css#L187-L190 (focus)](https://github.com/luca-dorcea/BookLend/blob/9343cba4fa2daf31323be531dd91a9651a32bb8d/style.css#L187-L190), [style.css#L192-L203 (dark)](https://github.com/luca-dorcea/BookLend/blob/9343cba4fa2daf31323be531dd91a9651a32bb8d/style.css#L192-L203) | Tab; dark mode |
 | S1-R8 | commit "Stage 1" pushed                              | [commit 9343cba](https://github.com/luca-dorcea/BookLend/commit/9343cba4fa2daf31323be531dd91a9651a32bb8d) | commit history |
+
+## Stage 2 checklist
+
+| ID    | Requirement                                   | Where (permalink) | How to check |
+| ----- | --------------------------------------------- | ----------------- | ------------ |
+| S2-R1 | JS file linked, logs on page load             | [index.html#L70 (script)](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/index.html#L70) | open page, F12 |
+| S2-R2 | 3+ items with id, name, state, tag            | [books.js#L1-L9](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/books.js#L1-L9) | read |
+| S2-R3 | list, count, search, add, toggle, delete      | [books.js#L11-L67](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/books.js#L11-L67), [tests #L69-L92](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/books.js#L69-L92) | console output |
+| S2-R4 | add rejects empty name and invalid tag        | [books.js#L30-L59 (addBook)](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/books.js#L30-L59), [tests #L88-L92](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/books.js#L88-L92) | Validare section, last 4 console lines |
+| S2-R5 | original array unchanged after add            | [books.js#L78](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/books.js#L78) | "Originalul a rămas cu: 3 cărți" |
+| S2-R6 | README Stage 2 section + AI log               | [README.md#L35-L41](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/README.md#L35-L41), [ai-log/etapa-02.md](https://github.com/luca-dorcea/BookLend/blob/fe97e73cf34e22c098039f79e6c22ffc13cc4384/ai-log/etapa-02.md) | read |
+| S2-R7 | commit "Stage 2" pushed                       | [commit fe97e73](https://github.com/luca-dorcea/BookLend/commit/fe97e73cf34e22c098039f79e6c22ffc13cc4384) | commit history |
