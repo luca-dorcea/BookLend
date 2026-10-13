@@ -31,6 +31,9 @@ npm run dev
 Then open the address printed in the terminal (http://localhost:5173).
 The static mockup from stages 1 and 2 is in `mockup/`.
 
+Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.github.io/BookLend/
+(the mockup: https://luca-dorcea.github.io/BookLend/mockup/).
+
 ## AI usage
 
 | Tool   | Used for                                                          |
