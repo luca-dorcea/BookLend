@@ -19,6 +19,11 @@
 - Got: "1 carte" and "1 împrumutată" when the number is 1, the plural otherwise.
 - Changed or rejected: kept as given.
 
+### 4. Icon for the theme button
+- Asked: a round sun/moon icon instead of the text on the theme button.
+- Got: components/ThemeIcon.jsx, which draws a moon in light mode and a sun in dark mode, and a round 40px button. The text moved to aria-label and title, so screen readers and the tooltip still say "Mod luminos" or "Mod întunecat".
+- Changed or rejected: the small button no longer covers the title on a phone, so its phone rule was removed.
+
 ## What I learned / what did not work
 State changes only through setBooks with a new list; changing the old array in place does not update the page.
 The counter is computed from the list on every render, so it never needs its own state.

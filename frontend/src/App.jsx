@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BookList from "./components/BookList.jsx";
+import ThemeIcon from "./components/ThemeIcon.jsx";
 
 const INITIAL_BOOKS = [
   { id: 1, title: "Enigma Otiliei", returned: false, condition: "good", borrower: "Ana" },
@@ -34,6 +35,7 @@ export default function App() {
   const lent = books.filter((b) => !b.returned).length;
   const bookWord = books.length === 1 ? "carte" : "cărți";
   const lentWord = lent === 1 ? "împrumutată" : "împrumutate";
+  const themeLabel = theme === "dark" ? "Mod luminos" : "Mod întunecat";
 
   return (
     <>
@@ -42,8 +44,10 @@ export default function App() {
           className="theme-toggle"
           onClick={handleToggleTheme}
           aria-pressed={theme === "dark"}
+          aria-label={themeLabel}
+          title={themeLabel}
         >
-          {theme === "dark" ? "Mod luminos" : "Mod întunecat"}
+          <ThemeIcon theme={theme} />
         </button>
         <h1>BookLend</h1>
         <p>Ține evidența cărților împrumutate prietenilor și familiei.</p>
