@@ -12,6 +12,7 @@
   --border: #e6ded5;
   --on-accent: #ffffff;
   --focus: #a3361f;
+  --danger: #b91c1c;
 
   --badge-new: #0f766e;
   --badge-good: #1d4ed8;
@@ -190,7 +191,7 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     color-scheme: dark;
     --bg: #17120f;
     --card: #231c18;
@@ -199,9 +200,85 @@ body {
     --border: #3b312b;
     --accent-soft: #3a2119;
     --focus: #f0a08c;
+    --danger: #f87171;
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #17120f;
+  --card: #231c18;
+  --text: #efe7e1;
+  --muted: #a99d94;
+  --border: #3b312b;
+  --accent-soft: #3a2119;
+  --focus: #f0a08c;
+  --danger: #f87171;
+}
+
+.item-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.item-main input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-danger {
+  border: 1px solid var(--danger);
+  background: transparent;
+  color: var(--danger);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: var(--danger);
+  color: var(--card);
+}
+
+.app-header {
+  position: relative;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  padding: 6px 12px;
+  border: 1px solid var(--on-accent);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--on-accent);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-dark);
+}
+
+.theme-toggle:focus-visible {
+  outline-color: var(--on-accent);
 }
 
 @media (max-width: 700px) {
   .container { grid-template-columns: 1fr; }
+  .item-card { flex-wrap: wrap; }
+  .theme-toggle { position: static; margin-bottom: 12px; }
 }
