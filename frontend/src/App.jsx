@@ -1,3 +1,5 @@
+import BookList from "./components/BookList.jsx";
+
 const books = [
   { id: 1, title: "Enigma Otiliei", returned: false, condition: "good", borrower: "Ana" },
   { id: 2, title: "Maitreyi", returned: true, condition: "new", borrower: "Mihai" },
@@ -19,7 +21,7 @@ export default function App() {
       <main className="container">
         <section className="panel">
           <h2>Cărțile mele împrumutate</h2>
-          <pre>{JSON.stringify(books, null, 2)}</pre>
+          <BookList books={books} />
         </section>
       </main>
     </>

@@ -38,7 +38,7 @@ Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.git
 
 | Tool   | Used for                                                          |
 | ------ | ----------------------------------------------------------------- |
-| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3) |
+| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4) |
 
 Details per stage: see the `ai-log/` folder.
 
@@ -55,12 +55,19 @@ Functions: `listTitles`, `countLent`, `searchBooks` (title or borrower), `nextId
 The app now lives in `frontend/`, built with Vite. The data from stage 2
 moved into the main component; the list is still printed raw.
 
+## Stage 4: components
+
+The list is rendered from the data, through two components:
+- `BookList` receives the whole array and renders one card per item
+- `BookCard` receives a single item through props and displays it
+
 ## Status
 
 - [x] Stage 1: static mockup
 - [x] Stage 2: data logic in JavaScript
 - [x] Stage 3: Vite and React project
-- [ ] Stage 4: components built from data
+- [x] Stage 4: components rendered from data
+- [ ] Stage 5: local state and events
 
 ## Stage 1 checklist
 
