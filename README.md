@@ -13,12 +13,23 @@ It shows who has each book, in what condition it left, and whether it has been r
 | category  | relation     | Novel, Poetry, Non-fiction                   |
 | user      | relation     | the owner of the book (from week 11)         |
 | borrower  | text         | optional, max 50 chars, who borrowed it      |
+| author    | text         | optional book detail                         |
+| year      | number       | optional, year of first publication          |
+| genre     | text         | optional, e.g. Roman, Nuvelă, Povestiri      |
+| pages     | number       | optional, pages in the lender's edition      |
+| publisher | text         | optional, publisher of the lender's edition  |
+| summary   | text         | optional, 3–4 line plot summary              |
 
 Sample data used across all stages:
 
 1. Enigma Otiliei, active (lent), good, borrower Ana
 2. Maitreyi, done (returned), new, borrower Mihai
 3. Ion, active (lent), worn, borrower Ioana
+
+From stage 5, `frontend/src/books.js` extends it to 30 books: Romanian and world prose
+(novels, novellas, short stories, sketches, a fairy tale, a memoir, a journal), including
+The Hobbit and the three volumes of The Lord of the Rings. Romanian and English titles stay
+in their language, others use the English title; all other text is Romanian.
 
 ## How to run
 
@@ -38,7 +49,7 @@ Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.git
 
 | Tool   | Used for                                                          |
 | ------ | ----------------------------------------------------------------- |
-| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events and theme toggle (stage 5) |
+| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5) |
 
 Details per stage: see the `ai-log/` folder.
 
@@ -66,6 +77,11 @@ The list is rendered from the data, through two components:
 The list lives in React state. Marking a book as returned and deleting it work from the page,
 and the counter in the header follows automatically. A button in the header switches
 between light and dark mode. Changes are lost on refresh, which is what stage 6 and stage 10 fix.
+
+The page has two lists side by side. "Biblioteca mea" holds every book, with a "Detalii"
+section (summary, author, year, genre, pages, publisher); lent books are crossed out.
+"Împrumută" asks for the borrower and the condition, and the book joins "Cărți împrumutate".
+Ticking "Returnată" there sends it back. Deleting asks for confirmation first.
 
 ## Status
 

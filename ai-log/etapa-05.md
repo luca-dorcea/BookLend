@@ -39,6 +39,11 @@
 - Got: one <dialog> in App, opened with showModal() from handleDelete. Its two buttons ("Anulează", "Șterge") sit in a form with method="dialog", so the dialog closes by itself and returnValue says which button was pressed. Escape cancels, and the card's "Șterge" button goes back to the guide's onClick={() => onDelete(book.id)}.
 - Changed or rejected: returnValue keeps its last value, so handleDelete clears it before opening; otherwise Escape after a delete would delete the next book too.
 
+### 8. Library, lent list and book details
+- Asked: a "Detalii" dropdown per book (summary, pages and other info), then two lists: the whole library and a separate "Cărți împrumutate" that grows when a book is lent, with lent books crossed out in the library; then 30 books of different kinds of prose, including all of The Lord of the Rings, with Romanian and English titles kept and other titles in English.
+- Got: books.js with 30 books, BookList/BookCard for "Biblioteca mea" (details in a native <details>), LentList/LentCard for "Cărți împrumutate", a lend dialog with "Cititor" and "Starea cărții", and a "Returnată" checkbox that sends a book back. A newly lent card slides in with a short highlight. Page counts and publishers come from library catalogues and publisher pages found online.
+- Changed or rejected: on phones the card text was squeezed, so the buttons now go under it and "Cărți împrumutate" comes first. No reliable Romanian page count was found for The Old Man and the Sea, Crime and Punishment or The Hobbit, so they use English editions: Scribner (127 pages), Vintage (624) and Houghton Mifflin (300).
+
 ## What I learned / what did not work
 State changes only through setBooks with a new list; changing the old array in place does not update the page.
 The counter is computed from the list on every render, so it never needs its own state.
