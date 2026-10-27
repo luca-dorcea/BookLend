@@ -3,6 +3,22 @@
 button,
 label {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+}
+
+.skip-link:focus-visible {
+  top: 12px;
 }
 
 :root {
@@ -18,6 +34,7 @@ label {
   --on-accent: #ffffff;
   --focus: #a3361f;
   --danger: #b91c1c;
+  --backdrop: rgb(0 0 0 / 0.5);
 
   --badge-new: #0f766e;
   --badge-good: #1d4ed8;
@@ -227,19 +244,28 @@ body {
 }
 
 .item-main {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   min-width: 0;
+}
+
+.item-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   cursor: pointer;
 }
 
-.item-main input[type="checkbox"] {
+.item-title input[type="checkbox"] {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+  margin: 3px 0 0;
   accent-color: var(--accent);
   cursor: pointer;
+}
+
+.item-main > .borrower,
+.item-main > .badge {
+  margin-left: 30px;
 }
 
 .item-actions {
@@ -265,6 +291,45 @@ body {
 
 .app-header {
   position: relative;
+}
+
+.btn-secondary {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--accent-soft);
+}
+
+.confirm-dialog {
+  width: calc(100% - 32px);
+  max-width: 360px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text);
+}
+
+.confirm-dialog::backdrop {
+  background: var(--backdrop);
+}
+
+.confirm-dialog p {
+  margin: 0 0 16px;
+  overflow-wrap: anywhere;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 
 .theme-toggle {

@@ -29,6 +29,16 @@
 - Got: long titles and borrower names now wrap inside the card instead of pushing the delete button off screen, headings use text-wrap: balance, buttons and labels use touch-action: manipulation, and the BookLend title has translate="no".
 - Changed or rejected: the checkbox shrank next to a long title, so it got flex-shrink: 0. Findings that would change what the stage guides ask for were left as they are.
 
+### 6. The remaining review findings
+- Asked: a preview of the other findings, on a separate branch.
+- Got: the delete button asks "Ștergi „<titlu>”?" first, and keyboard focus moves to the list heading after a delete. The checkbox label now holds only the title (inside the h3), and the status text describes it. The theme button keeps the fixed name "Mod întunecat", with aria-pressed saying whether it is on. Also a skip link to the list, a theme-color meta tag, no grey tap highlight, and "de" in the counter from 20 up ("20 de cărți").
+- Changed or rejected: "Cărțile mele împrumutate" was kept; it is the approved heading.
+
+### 7. Own confirmation box
+- Asked: a confirmation that does not use the browser's default box.
+- Got: one <dialog> in App, opened with showModal() from handleDelete. Its two buttons ("Anulează", "Șterge") sit in a form with method="dialog", so the dialog closes by itself and returnValue says which button was pressed. Escape cancels, and the card's "Șterge" button goes back to the guide's onClick={() => onDelete(book.id)}.
+- Changed or rejected: returnValue keeps its last value, so handleDelete clears it before opening; otherwise Escape after a delete would delete the next book too.
+
 ## What I learned / what did not work
 State changes only through setBooks with a new list; changing the old array in place does not update the page.
 The counter is computed from the list on every render, so it never needs its own state.
