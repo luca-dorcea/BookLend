@@ -105,3 +105,15 @@ The list is rendered from the data, through two components:
 | S3-R5 | node_modules ignored, build passes       | [frontend/.gitignore#L10-L11](https://github.com/luca-dorcea/BookLend/blob/009fe8c79ee267e9289cebeacc900a8f2eb4ce0a/frontend/.gitignore#L10-L11) | npm run build |
 | S3-R6 | README Stage 3 section + AI log          | [README.md#L50-L53](https://github.com/luca-dorcea/BookLend/blob/009fe8c79ee267e9289cebeacc900a8f2eb4ce0a/README.md#L50-L53), [ai-log/etapa-03.md](https://github.com/luca-dorcea/BookLend/blob/009fe8c79ee267e9289cebeacc900a8f2eb4ce0a/ai-log/etapa-03.md) | read |
 | S3-R7 | commit "Stage 3" pushed                  | [commit 009fe8c](https://github.com/luca-dorcea/BookLend/commit/009fe8c79ee267e9289cebeacc900a8f2eb4ce0a) | commit history |
+
+## Stage 4 checklist
+
+| ID    | Requirement                              | Where (permalink) | How to check |
+| ----- | ---------------------------------------- | ----------------- | ------------ |
+| S4-R1 | 2+ components in src/components/         | [frontend/src/components/](https://github.com/luca-dorcea/BookLend/tree/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c/frontend/src/components) | open folder |
+| S4-R2 | card receives data through props         | [BookCard.jsx#L3-L13](https://github.com/luca-dorcea/BookLend/blob/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c/frontend/src/components/BookCard.jsx#L3-L13) | read |
+| S4-R3 | map + key={id}, no console warnings      | [BookList.jsx#L9-L13](https://github.com/luca-dorcea/BookLend/blob/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c/frontend/src/components/BookList.jsx#L9-L13) | F12, Console |
+| S4-R4 | message for empty list                   | [BookList.jsx#L4-L6](https://github.com/luca-dorcea/BookLend/blob/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c/frontend/src/components/BookList.jsx#L4-L6) | set array to [] |
+| S4-R5 | state changes the card look              | [BookCard.jsx#L5 (.done)](https://github.com/luca-dorcea/BookLend/blob/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c/frontend/src/components/BookCard.jsx#L5), [#L13 (status)](https://github.com/luca-dorcea/BookLend/blob/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c/frontend/src/components/BookCard.jsx#L13) | toggle a returned flag |
+| S4-R6 | README Stage 4 section + AI log          | [README.md#L58-L62](https://github.com/luca-dorcea/BookLend/blob/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c/README.md#L58-L62), [ai-log/etapa-04.md](https://github.com/luca-dorcea/BookLend/blob/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c/ai-log/etapa-04.md) | read |
+| S4-R7 | commit "Stage 4" pushed                  | [commit dfd8a77](https://github.com/luca-dorcea/BookLend/commit/dfd8a77cbf50ad424c6bd3aa90daab1dd49fa73c) | commit history |
