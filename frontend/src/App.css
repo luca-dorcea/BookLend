@@ -1,5 +1,10 @@
 * { box-sizing: border-box; }
 
+button,
+label {
+  touch-action: manipulation;
+}
+
 :root {
   color-scheme: light;
   --bg: #f6f3ee;
@@ -37,6 +42,7 @@ body {
 .app-header h1 {
   margin: 0 0 4px;
   font-size: 2rem;
+  text-wrap: balance;
 }
 
 .app-header p {
@@ -69,6 +75,7 @@ body {
 .panel h2 {
   margin: 0 0 16px;
   font-size: 1.15rem;
+  text-wrap: balance;
 }
 
 .item-form {
@@ -129,12 +136,15 @@ body {
 .item-card h3 {
   margin: 0 0 2px;
   font-size: 1rem;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .borrower {
   margin: 0 0 6px;
   font-size: 0.85rem;
   color: var(--muted);
+  overflow-wrap: anywhere;
 }
 
 .status {
@@ -220,12 +230,14 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
   cursor: pointer;
 }
 
 .item-main input[type="checkbox"] {
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
   accent-color: var(--accent);
   cursor: pointer;
 }

@@ -24,6 +24,11 @@
 - Got: components/ThemeIcon.jsx, which draws a moon in light mode and a sun in dark mode, and a round 40px button. The text moved to aria-label and title, so screen readers and the tooltip still say "Mod luminos" or "Mod întunecat".
 - Changed or rejected: the small button no longer covers the title on a phone, so its phone rule was removed.
 
+### 5. Review against the Web Interface Guidelines
+- Asked: to fix the review findings that do not conflict with the stage guides.
+- Got: long titles and borrower names now wrap inside the card instead of pushing the delete button off screen, headings use text-wrap: balance, buttons and labels use touch-action: manipulation, and the BookLend title has translate="no".
+- Changed or rejected: the checkbox shrank next to a long title, so it got flex-shrink: 0. Findings that would change what the stage guides ask for were left as they are.
+
 ## What I learned / what did not work
 State changes only through setBooks with a new list; changing the old array in place does not update the page.
 The counter is computed from the list on every render, so it never needs its own state.

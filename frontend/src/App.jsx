@@ -49,7 +49,7 @@ export default function App() {
         >
           <ThemeIcon theme={theme} />
         </button>
-        <h1>BookLend</h1>
+        <h1 translate="no">BookLend</h1>
         <p>Ține evidența cărților împrumutate prietenilor și familiei.</p>
         <p className="app-count">
           {books.length} {bookWord}, dintre care {lent} {lentWord}
