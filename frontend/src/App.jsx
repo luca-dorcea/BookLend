@@ -32,6 +32,8 @@ export default function App() {
   }
 
   const lent = books.filter((b) => !b.returned).length;
+  const bookWord = books.length === 1 ? "carte" : "cărți";
+  const lentWord = lent === 1 ? "împrumutată" : "împrumutate";
 
   return (
     <>
@@ -46,7 +48,7 @@ export default function App() {
         <h1>BookLend</h1>
         <p>Ține evidența cărților împrumutate prietenilor și familiei.</p>
         <p className="app-count">
-          {books.length} cărți, dintre care {lent} împrumutate
+          {books.length} {bookWord}, dintre care {lent} {lentWord}
         </p>
       </header>
       <main className="container">
