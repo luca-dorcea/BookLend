@@ -1,11 +1,12 @@
 import { CONDITION_LABELS } from "../conditions.js";
+import { toDative } from "../dative.js";
 
-export default function BookCard({ book, onLend, onDelete }) {
+export default function BookCard({ book, isNew, onLend, onDelete }) {
   const isLent = !book.returned;
   const facts = [
-    { label: "Autor", value: book.author },
-    { label: "Apărută în", value: book.year },
+    { label: "Tip", value: book.type },
     { label: "Gen", value: book.genre },
+    { label: "Apărută în", value: book.year },
     { label: "Pagini", value: book.pages },
     { label: "Editura", value: book.publisher },
   ].filter((fact) => fact.value);
@@ -14,6 +15,7 @@ export default function BookCard({ book, onLend, onDelete }) {
     <li className={isLent ? "item-card lent" : "item-card"}>
       <div className="item-main">
         <h3>{book.title}</h3>
+        {book.author && <p className="author">{book.author}</p>}
         <span className={`badge badge-${book.condition}`}>
           Stare: {CONDITION_LABELS[book.condition]}
         </span>
@@ -52,10 +54,13 @@ export default function BookCard({ book, onLend, onDelete }) {
       </div>
       <div className="item-actions">
         {isLent ? (
-          <span className="status">Împrumutată</span>
+          <span className={isNew ? "stamp is-new" : "stamp"}>
+            Împrumutată
+            {book.borrower && <span className="stamp-name">{toDative(book.borrower)}</span>}
+          </span>
         ) : (
           <button
-            className="btn-primary"
+            className="btn-outline"
             onClick={() => onLend(book.id)}
             aria-label={`Împrumută ${book.title}`}
           >
@@ -63,7 +68,7 @@ export default function BookCard({ book, onLend, onDelete }) {
           </button>
         )}
         <button
-          className="btn-danger"
+          className="btn-quiet-danger"
           onClick={() => onDelete(book.id)}
           aria-label={`Șterge ${book.title}`}
         >

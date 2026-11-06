@@ -1,6 +1,9 @@
 import { useState } from "react";
 import BookList from "./components/BookList.jsx";
+import FilterSelect from "./components/FilterSelect.jsx";
 import LentList from "./components/LentList.jsx";
+import Bookcase from "./components/Bookcase.jsx";
+import Lamp from "./components/Lamp.jsx";
 import ThemeIcon from "./components/ThemeIcon.jsx";
 import { INITIAL_BOOKS } from "./books.js";
 
@@ -13,6 +16,10 @@ function countWord(n, one, many) {
   return `de ${many}`;
 }
 
+function uniqueSorted(values) {
+  return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, "ro"));
+}
+
 function initialTheme() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
@@ -23,29 +30,33 @@ export default function App() {
   const [pendingId, setPendingId] = useState(null);
   const [lendId, setLendId] = useState(null);
   const [justLentId, setJustLentId] = useState(null);
+  const [type, setType] = useState("");
+  const [genre, setGenre] = useState("");
+  const [author, setAuthor] = useState("");
+  const [reader, setReader] = useState("");
 
   function handleLend(id) {
     setLendId(id);
     const dialog = document.getElementById("lend-dialog");
-    dialog.returnValue = "";
+    const form = dialog.querySelector("form");
+    form.reset();
+    form.elements.condition.value = books.find((b) => b.id === id).condition;
     dialog.showModal();
   }
 
-  function handleLendClose(event) {
-    const dialog = event.currentTarget;
-    if (dialog.returnValue === "lend") {
-      const form = new FormData(dialog.querySelector("form"));
-      const borrower = form.get("borrower").trim();
-      const condition = form.get("condition");
-      setBooks((prev) =>
-        prev.map((b) =>
-          b.id === lendId ? { ...b, returned: false, borrower, condition } : b
-        )
-      );
-      setJustLentId(lendId);
-      document.getElementById("lent-title").focus();
-    }
-    setLendId(null);
+  function handleLendSubmit(event) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const borrower = form.get("borrower").trim();
+    const condition = form.get("condition");
+    setBooks((prev) =>
+      prev.map((b) =>
+        b.id === lendId ? { ...b, returned: false, borrower, condition } : b
+      )
+    );
+    setJustLentId(lendId);
+    document.getElementById("lend-dialog").close();
+    document.getElementById("lent-title").focus();
   }
 
   function handleReturn(id) {
@@ -57,17 +68,21 @@ export default function App() {
 
   function handleDelete(id) {
     setPendingId(id);
-    const dialog = document.getElementById("confirm-delete");
-    dialog.returnValue = "";
-    dialog.showModal();
+    document.getElementById("confirm-delete").showModal();
   }
 
-  function handleConfirmClose(event) {
-    if (event.currentTarget.returnValue === "delete") {
-      setBooks((prev) => prev.filter((b) => b.id !== pendingId));
-      document.getElementById("library-title").focus();
-    }
-    setPendingId(null);
+  function handleDeleteSubmit(event) {
+    event.preventDefault();
+    setBooks((prev) => prev.filter((b) => b.id !== pendingId));
+    document.getElementById("confirm-delete").close();
+    document.getElementById("library-title").focus();
+  }
+
+  function handleResetFilters() {
+    setType("");
+    setGenre("");
+    setAuthor("");
+    setReader("");
   }
 
   function handleToggleTheme() {
@@ -77,6 +92,29 @@ export default function App() {
   }
 
   const lentBooks = books.filter((b) => !b.returned);
+
+  const types = uniqueSorted(books.map((b) => b.type));
+  const genres = uniqueSorted(books.map((b) => b.genre));
+  const authors = uniqueSorted(books.map((b) => b.author));
+  const readers = uniqueSorted(lentBooks.map((b) => b.borrower));
+  const activeType = types.includes(type) ? type : "";
+  const activeGenre = genres.includes(genre) ? genre : "";
+  const activeAuthor = authors.includes(author) ? author : "";
+  const activeReader = readers.includes(reader) ? reader : "";
+
+  function matches(b) {
+    return (
+      (!activeType || b.type === activeType) &&
+      (!activeGenre || b.genre === activeGenre) &&
+      (!activeAuthor || b.author === activeAuthor)
+    );
+  }
+
+  const shownBooks = books.filter(matches);
+  const shownLent = lentBooks.filter(
+    (b) => matches(b) && (!activeReader || b.borrower === activeReader)
+  );
+  const filtering = activeType || activeGenre || activeAuthor;
   const booksText = `${books.length} ${countWord(books.length, "carte", "cărți")}`;
   const lentText = `${lentBooks.length} ${countWord(lentBooks.length, "împrumutată", "împrumutate")}`;
   const pendingBook = books.find((b) => b.id === pendingId);
@@ -84,6 +122,10 @@ export default function App() {
 
   return (
     <>
+      <div className="backdrop" aria-hidden="true">
+        <Bookcase />
+        <Lamp />
+      </div>
       <a className="skip-link" href="#library-title">
         Sari la lista de cărți
       </a>
@@ -97,21 +139,82 @@ export default function App() {
         >
           <ThemeIcon theme={theme} />
         </button>
-        <h1 translate="no">BookLend</h1>
-        <p>Ține evidența cărților împrumutate prietenilor și familiei.</p>
-        <p className="app-count">
-          {booksText}, dintre care {lentText}
-        </p>
+        <div className="plaque">
+          <h1 translate="no">BookLend</h1>
+          <p>Ține evidența cărților împrumutate prietenilor și familiei.</p>
+          <p className="app-count">
+            {booksText}, dintre care {lentText}
+          </p>
+        </div>
       </header>
       <main className="container">
+        <div className="filters" role="group" aria-label="Filtre">
+          <FilterSelect
+            label="Tip"
+            value={activeType}
+            options={types}
+            allLabel="Toate tipurile"
+            onChange={setType}
+          />
+          <FilterSelect
+            label="Gen"
+            value={activeGenre}
+            options={genres}
+            allLabel="Toate genurile"
+            onChange={setGenre}
+          />
+          <FilterSelect
+            label="Autor"
+            value={activeAuthor}
+            options={authors}
+            allLabel="Toți autorii"
+            onChange={setAuthor}
+          />
+          {(filtering || activeReader) && (
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={handleResetFilters}
+            >
+              Resetează filtrele
+            </button>
+          )}
+          <p className="filter-count" aria-live="polite">
+            {filtering ? `Se afișează ${shownBooks.length} din ${books.length}` : ""}
+          </p>
+        </div>
         <section className="panel">
           <h2 id="library-title" tabIndex={-1}>Biblioteca mea</h2>
-          <BookList books={books} onLend={handleLend} onDelete={handleDelete} />
+          <BookList
+            books={shownBooks}
+            emptyText={
+              books.length === 0
+                ? "Nu ai nicio carte în bibliotecă."
+                : "Nicio carte nu se potrivește filtrelor."
+            }
+            justLentId={justLentId}
+            onLend={handleLend}
+            onDelete={handleDelete}
+          />
         </section>
         <section className="panel panel-lent">
           <h2 id="lent-title" tabIndex={-1}>Cărți împrumutate</h2>
+          {readers.length > 0 && (
+            <FilterSelect
+              label="Cititor"
+              value={activeReader}
+              options={readers}
+              allLabel="Toți cititorii"
+              onChange={setReader}
+            />
+          )}
           <LentList
-            books={lentBooks}
+            books={shownLent}
+            emptyText={
+              lentBooks.length === 0
+                ? "Nu ai împrumutat încă nicio carte."
+                : "Nicio carte împrumutată nu se potrivește filtrelor."
+            }
             justLentId={justLentId}
             onReturn={handleReturn}
           />
@@ -121,9 +224,8 @@ export default function App() {
         id="lend-dialog"
         className="confirm-dialog"
         aria-labelledby="lend-text"
-        onClose={handleLendClose}
       >
-        <form method="dialog" key={lendId}>
+        <form method="dialog" onSubmit={handleLendSubmit}>
           <p id="lend-text" className="dialog-title">
             Împrumută „{lendBook?.title}”
           </p>
@@ -135,12 +237,11 @@ export default function App() {
               placeholder="Ex: Radu (opțional)"
               maxLength={50}
               autoComplete="off"
-              autoFocus
             />
           </label>
           <label className="dialog-field">
             Starea cărții
-            <select name="condition" defaultValue={lendBook?.condition}>
+            <select name="condition">
               <option value="new">Nouă</option>
               <option value="good">Bună</option>
               <option value="worn">Uzată</option>
@@ -154,7 +255,7 @@ export default function App() {
             >
               Anulează
             </button>
-            <button value="lend" className="btn-primary">
+            <button className="btn-primary">
               Împrumută
             </button>
           </div>
@@ -164,15 +265,18 @@ export default function App() {
         id="confirm-delete"
         className="confirm-dialog"
         aria-labelledby="confirm-text"
-        onClose={handleConfirmClose}
       >
-        <form method="dialog">
+        <form method="dialog" onSubmit={handleDeleteSubmit}>
           <p id="confirm-text">Ștergi „{pendingBook?.title}”?</p>
           <div className="dialog-actions">
-            <button value="cancel" className="btn-secondary">
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => document.getElementById("confirm-delete").close()}
+            >
               Anulează
             </button>
-            <button value="delete" className="btn-danger">
+            <button className="btn-danger">
               Șterge
             </button>
           </div>

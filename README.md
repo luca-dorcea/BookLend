@@ -15,7 +15,8 @@ It shows who has each book, in what condition it left, and whether it has been r
 | borrower  | text         | optional, max 50 chars, who borrowed it      |
 | author    | text         | optional book detail                         |
 | year      | number       | optional, year of first publication          |
-| genre     | text         | optional, e.g. Roman, Nuvelă, Povestiri      |
+| type      | text         | optional, kind of prose: Roman, Nuvelă, Povestiri… |
+| genre     | text         | optional, e.g. Realist, Psihologic, Fantasy  |
 | pages     | number       | optional, pages in the lender's edition      |
 | publisher | text         | optional, publisher of the lender's edition  |
 | summary   | text         | optional, 3–4 line plot summary              |
@@ -82,6 +83,7 @@ The page has two lists side by side. "Biblioteca mea" holds every book, with a "
 section (summary, author, year, genre, pages, publisher); lent books are crossed out.
 "Împrumută" asks for the borrower and the condition, and the book joins "Cărți împrumutate".
 Ticking "Returnată" there sends it back. Deleting asks for confirmation first.
+Above both lists, "Tip", "Gen" and "Autor" filter the books; "Cărți împrumutate" also has a "Cititor" filter.
 
 ## Status
 

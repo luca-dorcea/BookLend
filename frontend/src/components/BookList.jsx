@@ -1,8 +1,8 @@
 import BookCard from "./BookCard.jsx";
 
-export default function BookList({ books, onLend, onDelete }) {
+export default function BookList({ books, emptyText, justLentId, onLend, onDelete }) {
   if (books.length === 0) {
-    return <p className="empty">Nu ai nicio carte în bibliotecă.</p>;
+    return <p className="empty">{emptyText}</p>;
   }
 
   return (
@@ -11,6 +11,7 @@ export default function BookList({ books, onLend, onDelete }) {
         <BookCard
           key={book.id}
           book={book}
+          isNew={book.id === justLentId}
           onLend={onLend}
           onDelete={onDelete}
         />

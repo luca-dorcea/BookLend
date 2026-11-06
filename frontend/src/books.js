@@ -7,7 +7,8 @@ export const INITIAL_BOOKS = [
     borrower: "Ana",
     author: "George Călinescu",
     year: 1938,
-    genre: "Roman balzacian",
+    type: "Roman",
+    genre: "Realist",
     pages: 504,
     publisher: "Litera",
     summary:
@@ -21,7 +22,8 @@ export const INITIAL_BOOKS = [
     borrower: "Mihai",
     author: "Mircea Eliade",
     year: 1933,
-    genre: "Roman de dragoste",
+    type: "Roman",
+    genre: "De dragoste",
     pages: 200,
     publisher: "Humanitas",
     summary:
@@ -35,7 +37,8 @@ export const INITIAL_BOOKS = [
     borrower: "Ioana",
     author: "Liviu Rebreanu",
     year: 1920,
-    genre: "Roman realist",
+    type: "Roman",
+    genre: "Realist",
     pages: 414,
     publisher: "Hyperion",
     summary:
@@ -49,7 +52,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Ion Creangă",
     year: 1881,
-    genre: "Memorii",
+    type: "Memorii",
+    genre: "Autobiografic",
     pages: 153,
     publisher: "Albatros",
     summary:
@@ -63,7 +67,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Ioan Slavici",
     year: 1881,
-    genre: "Nuvelă psihologică",
+    type: "Nuvelă",
+    genre: "Psihologic",
     pages: 166,
     publisher: "Astro",
     summary:
@@ -77,7 +82,8 @@ export const INITIAL_BOOKS = [
     borrower: "Andrei",
     author: "Mihail Sadoveanu",
     year: 1930,
-    genre: "Roman",
+    type: "Roman",
+    genre: "Mitic",
     pages: 158,
     publisher: "Gramar",
     summary:
@@ -91,7 +97,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Marin Preda",
     year: 1955,
-    genre: "Roman realist",
+    type: "Roman",
+    genre: "Realist",
     pages: 304,
     publisher: "Cartex 2000",
     summary:
@@ -105,7 +112,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Camil Petrescu",
     year: 1930,
-    genre: "Roman psihologic",
+    type: "Roman",
+    genre: "Psihologic",
     pages: 363,
     publisher: "Curtea Veche",
     summary:
@@ -119,7 +127,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Mihai Eminescu",
     year: 1872,
-    genre: "Nuvelă fantastică",
+    type: "Nuvelă",
+    genre: "Fantastic",
     pages: 259,
     publisher: "Minerva",
     summary:
@@ -133,7 +142,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "I. L. Caragiale",
     year: 1901,
-    genre: "Schițe",
+    type: "Schițe",
+    genre: "Umoristic",
     pages: 258,
     publisher: "Editura Tineretului",
     summary:
@@ -147,7 +157,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Ion Creangă",
     year: 1877,
-    genre: "Basm cult",
+    type: "Basm",
+    genre: "Fantastic",
     pages: 102,
     publisher: "Albatros",
     summary:
@@ -161,7 +172,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Ioan Slavici",
     year: 1894,
-    genre: "Roman realist",
+    type: "Roman",
+    genre: "Realist",
     pages: 277,
     publisher: "Cartex 2000",
     summary:
@@ -175,7 +187,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Liviu Rebreanu",
     year: 1922,
-    genre: "Roman psihologic",
+    type: "Roman",
+    genre: "Psihologic",
     pages: 280,
     publisher: "Minerva",
     summary:
@@ -189,7 +202,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Costache Negruzzi",
     year: 1840,
-    genre: "Nuvelă istorică",
+    type: "Nuvelă",
+    genre: "Istoric",
     pages: 166,
     publisher: "Gramar",
     summary:
@@ -203,7 +217,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Mihail Sadoveanu",
     year: 1928,
-    genre: "Povestiri",
+    type: "Povestiri",
+    genre: "Istoric",
     pages: 429,
     publisher: "Editura pentru Literatură",
     summary:
@@ -217,7 +232,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Mateiu I. Caragiale",
     year: 1929,
-    genre: "Roman",
+    type: "Roman",
+    genre: "Decadent",
     pages: 128,
     publisher: "Herra",
     summary:
@@ -231,7 +247,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "James Joyce",
     year: 1914,
-    genre: "Povestiri",
+    type: "Povestiri",
+    genre: "Realist",
     pages: 264,
     publisher: "Humanitas Fiction",
     summary:
@@ -245,7 +262,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Nicolae Steinhardt",
     year: 1991,
-    genre: "Jurnal",
+    type: "Jurnal",
+    genre: "Autobiografic",
     pages: 438,
     publisher: "Dacia",
     summary:
@@ -259,7 +277,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Antoine de Saint-Exupéry",
     year: 1943,
-    genre: "Poveste",
+    type: "Poveste",
+    genre: "Fantastic",
     pages: 128,
     publisher: "RAO",
     summary:
@@ -273,7 +292,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Ernest Hemingway",
     year: 1952,
-    genre: "Nuvelă",
+    type: "Nuvelă",
+    genre: "Realist",
     pages: 127,
     publisher: "Scribner",
     summary:
@@ -287,7 +307,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Franz Kafka",
     year: 1915,
-    genre: "Nuvelă",
+    type: "Nuvelă",
+    genre: "Absurd",
     pages: 191,
     publisher: "Polirom",
     summary:
@@ -301,7 +322,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "F. M. Dostoievski",
     year: 1866,
-    genre: "Roman psihologic",
+    type: "Roman",
+    genre: "Psihologic",
     pages: 624,
     publisher: "Vintage",
     summary:
@@ -315,7 +337,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Gabriel García Márquez",
     year: 1967,
-    genre: "Roman",
+    type: "Roman",
+    genre: "Realism magic",
     pages: 480,
     publisher: "RAO",
     summary:
@@ -329,7 +352,8 @@ export const INITIAL_BOOKS = [
     borrower: "Elena",
     author: "George Orwell",
     year: 1949,
-    genre: "Roman distopic",
+    type: "Roman",
+    genre: "Distopic",
     pages: 384,
     publisher: "Polirom",
     summary:
@@ -343,7 +367,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Mihail Bulgakov",
     year: 1967,
-    genre: "Roman",
+    type: "Roman",
+    genre: "Fantastic",
     pages: 520,
     publisher: "Humanitas",
     summary:
@@ -357,7 +382,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "Jane Austen",
     year: 1813,
-    genre: "Roman de dragoste",
+    type: "Roman",
+    genre: "De dragoste",
     pages: 365,
     publisher: "Corint",
     summary:
@@ -371,7 +397,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "J. R. R. Tolkien",
     year: 1937,
-    genre: "Roman fantasy",
+    type: "Roman",
+    genre: "Fantasy",
     pages: 300,
     publisher: "Houghton Mifflin",
     summary:
@@ -385,7 +412,8 @@ export const INITIAL_BOOKS = [
     borrower: "Radu",
     author: "J. R. R. Tolkien",
     year: 1954,
-    genre: "Roman fantasy",
+    type: "Roman",
+    genre: "Fantasy",
     pages: 571,
     publisher: "RAO",
     summary:
@@ -399,7 +427,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "J. R. R. Tolkien",
     year: 1954,
-    genre: "Roman fantasy",
+    type: "Roman",
+    genre: "Fantasy",
     pages: 514,
     publisher: "RAO",
     summary:
@@ -413,7 +442,8 @@ export const INITIAL_BOOKS = [
     borrower: "",
     author: "J. R. R. Tolkien",
     year: 1955,
-    genre: "Roman fantasy",
+    type: "Roman",
+    genre: "Fantasy",
     pages: 572,
     publisher: "RAO",
     summary:

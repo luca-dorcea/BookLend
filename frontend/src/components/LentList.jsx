@@ -1,8 +1,8 @@
 import LentCard from "./LentCard.jsx";
 
-export default function LentList({ books, justLentId, onReturn }) {
+export default function LentList({ books, emptyText, justLentId, onReturn }) {
   if (books.length === 0) {
-    return <p className="empty">Nu ai împrumutat încă nicio carte.</p>;
+    return <p className="empty">{emptyText}</p>;
   }
 
   return (
