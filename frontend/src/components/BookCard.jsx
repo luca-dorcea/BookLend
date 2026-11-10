@@ -1,7 +1,7 @@
 import { CONDITION_LABELS } from "../conditions.js";
 import { toDative } from "../dative.js";
 
-export default function BookCard({ book, isNew, onLend, onDelete }) {
+export default function BookCard({ book, isNew, onLend, onToggle, onDelete }) {
   const isLent = !book.returned;
   const facts = [
     { label: "Tip", value: book.type },
@@ -12,9 +12,13 @@ export default function BookCard({ book, isNew, onLend, onDelete }) {
   ].filter((fact) => fact.value);
 
   return (
-    <li className={isLent ? "item-card lent" : "item-card"}>
+    <li
+      className={isLent ? "item-card lent" : "item-card"}
+      data-testid="item"
+      data-id={book.id}
+    >
       <div className="item-main">
-        <h3>{book.title}</h3>
+        <h3 data-testid="item-title">{book.title}</h3>
         {book.author && <p className="author">{book.author}</p>}
         <span className={`badge badge-${book.condition}`}>
           Stare: {CONDITION_LABELS[book.condition]}
@@ -67,10 +71,21 @@ export default function BookCard({ book, isNew, onLend, onDelete }) {
             Împrumută
           </button>
         )}
+        <label className="return-toggle">
+          <input
+            type="checkbox"
+            checked={book.returned}
+            onChange={() => onToggle(book.id)}
+            aria-label={`Pe raft: ${book.title}`}
+            data-testid="item-toggle"
+          />
+          Pe raft
+        </label>
         <button
           className="btn-quiet-danger"
           onClick={() => onDelete(book.id)}
           aria-label={`Șterge ${book.title}`}
+          data-testid="item-delete"
         >
           Șterge
         </button>

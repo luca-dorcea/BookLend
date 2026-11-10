@@ -1,0 +1,10 @@
+{
+  "resource": "books",
+  "title": "title",
+  "done": "returned",
+  "sample": {
+    "author": "Ion Creangă",
+    "type": "Basm",
+    "condition": "worn"
+  }
+}

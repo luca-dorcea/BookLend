@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import BookForm from "./components/BookForm.jsx";
 import BookList from "./components/BookList.jsx";
 import FilterSelect from "./components/FilterSelect.jsx";
 import LentList from "./components/LentList.jsx";
 import Bookcase from "./components/Bookcase.jsx";
 import Lamp from "./components/Lamp.jsx";
 import ThemeIcon from "./components/ThemeIcon.jsx";
-import { fetchBooks } from "./api.js";
+import { createBook, deleteBook, fetchBooks, updateBook } from "./api.js";
 
 const plural = new Intl.PluralRules("ro");
 
@@ -29,9 +30,10 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [theme, setTheme] = useState(initialTheme);
-  const [pendingId, setPendingId] = useState(null);
   const [lendId, setLendId] = useState(null);
+  const [lendError, setLendError] = useState("");
   const [justLentId, setJustLentId] = useState(null);
+  const [deleted, setDeleted] = useState(null);
   const [type, setType] = useState("");
   const [genre, setGenre] = useState("");
   const [author, setAuthor] = useState("");
@@ -44,7 +46,7 @@ export default function App() {
         const data = await fetchBooks();
         if (!ignore) setBooks(data);
       } catch (err) {
-        if (!ignore) setError(err.message);
+        if (!ignore) setError(`Nu am putut încărca datele: ${err.message}.`);
       } finally {
         if (!ignore) setLoading(false);
       }
@@ -55,8 +57,32 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!deleted) return;
+    const timer = setTimeout(() => setDeleted(null), 8000);
+    return () => clearTimeout(timer);
+  }, [deleted]);
+
+  async function handleAdd(book) {
+    const created = await createBook(book);
+    setBooks((prev) => [...prev, created]);
+    if (!created.returned) setJustLentId(created.id);
+  }
+
+  async function handleToggle(id) {
+    const book = books.find((b) => b.id === id);
+    try {
+      const updated = await updateBook(id, { returned: !book.returned });
+      setBooks((prev) => prev.map((b) => (b.id === id ? updated : b)));
+      setError(null);
+    } catch (err) {
+      setError(`Nu am putut salva modificarea: ${err.message}.`);
+    }
+  }
+
   function handleLend(id) {
     setLendId(id);
+    setLendError("");
     const dialog = document.getElementById("lend-dialog");
     const form = dialog.querySelector("form");
     form.reset();
@@ -64,38 +90,45 @@ export default function App() {
     dialog.showModal();
   }
 
-  function handleLendSubmit(event) {
+  async function handleLendSubmit(event) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const borrower = form.get("borrower").trim();
     const condition = form.get("condition");
-    setBooks((prev) =>
-      prev.map((b) =>
-        b.id === lendId ? { ...b, returned: false, borrower, condition } : b
-      )
-    );
-    setJustLentId(lendId);
-    document.getElementById("lend-dialog").close();
-    document.getElementById("lent-title").focus();
+    try {
+      const updated = await updateBook(lendId, { returned: false, borrower, condition });
+      setBooks((prev) => prev.map((b) => (b.id === lendId ? updated : b)));
+      setJustLentId(lendId);
+      setError(null);
+      document.getElementById("lend-dialog").close();
+      document.getElementById("lent-title").focus();
+    } catch (err) {
+      setLendError(`Nu am putut salva împrumutul: ${err.message}.`);
+    }
   }
 
-  function handleReturn(id) {
-    setBooks((prev) =>
-      prev.map((b) => (b.id === id ? { ...b, returned: true } : b))
-    );
-    document.getElementById("lent-title").focus();
+  async function handleDelete(id) {
+    const book = books.find((b) => b.id === id);
+    try {
+      await deleteBook(id);
+      setBooks((prev) => prev.filter((b) => b.id !== id));
+      setDeleted(book);
+      setError(null);
+      document.getElementById("library-title").focus();
+    } catch (err) {
+      setError(`Nu am putut șterge cartea: ${err.message}.`);
+    }
   }
 
-  function handleDelete(id) {
-    setPendingId(id);
-    document.getElementById("confirm-delete").showModal();
-  }
-
-  function handleDeleteSubmit(event) {
-    event.preventDefault();
-    setBooks((prev) => prev.filter((b) => b.id !== pendingId));
-    document.getElementById("confirm-delete").close();
-    document.getElementById("library-title").focus();
+  async function handleUndo() {
+    const book = deleted;
+    setDeleted(null);
+    try {
+      const restored = await createBook(book);
+      setBooks((prev) => [...prev, restored].sort((a, b) => a.id - b.id));
+    } catch (err) {
+      setError(`Nu am putut readuce cartea: ${err.message}.`);
+    }
   }
 
   function handleResetFilters() {
@@ -137,7 +170,6 @@ export default function App() {
   const filtering = activeType || activeGenre || activeAuthor;
   const booksText = `${books.length} ${countWord(books.length, "carte", "cărți")}`;
   const lentText = `${lentBooks.length} ${countWord(lentBooks.length, "împrumutată", "împrumutate")}`;
-  const pendingBook = books.find((b) => b.id === pendingId);
   const lendBook = books.find((b) => b.id === lendId);
 
   return (
@@ -203,14 +235,46 @@ export default function App() {
             {filtering ? `Se afișează ${shownBooks.length} din ${books.length}` : ""}
           </p>
         </div>
-        {loading && <p className="info status-message">Se încarcă biblioteca…</p>}
-        {error && (
-          <p className="error status-message">
-            Nu am putut încărca datele: {error}. Rulează <code>npm run api</code>?
+        {loading && (
+          <p className="info status-message" data-testid="loading">
+            Se încarcă biblioteca…
           </p>
         )}
-        {!loading && !error && (
+        {error && (
+          <p className="error status-message" data-testid="error">
+            {error} Verifică dacă rulează <code>npm run api</code>.
+          </p>
+        )}
+        {!loading && (
           <>
+            <aside className="sidebar">
+              <section className="panel">
+                <h2>Adaugă o carte</h2>
+                <BookForm onAdd={handleAdd} />
+              </section>
+              <section className="panel panel-lent">
+                <h2 id="lent-title" tabIndex={-1}>Cărți împrumutate</h2>
+                {readers.length > 0 && (
+                  <FilterSelect
+                    label="Cititor"
+                    value={activeReader}
+                    options={readers}
+                    allLabel="Toți cititorii"
+                    onChange={setReader}
+                  />
+                )}
+                <LentList
+                  books={shownLent}
+                  emptyText={
+                    lentBooks.length === 0
+                      ? "Nu ai împrumutat încă nicio carte."
+                      : "Nicio carte împrumutată nu se potrivește filtrelor."
+                  }
+                  justLentId={justLentId}
+                  onReturn={handleToggle}
+                />
+              </section>
+            </aside>
             <section className="panel">
               <h2 id="library-title" tabIndex={-1}>Biblioteca mea</h2>
               <BookList
@@ -222,34 +286,23 @@ export default function App() {
                 }
                 justLentId={justLentId}
                 onLend={handleLend}
+                onToggle={handleToggle}
                 onDelete={handleDelete}
-              />
-            </section>
-            <section className="panel panel-lent">
-              <h2 id="lent-title" tabIndex={-1}>Cărți împrumutate</h2>
-              {readers.length > 0 && (
-                <FilterSelect
-                  label="Cititor"
-                  value={activeReader}
-                  options={readers}
-                  allLabel="Toți cititorii"
-                  onChange={setReader}
-                />
-              )}
-              <LentList
-                books={shownLent}
-                emptyText={
-                  lentBooks.length === 0
-                    ? "Nu ai împrumutat încă nicio carte."
-                    : "Nicio carte împrumutată nu se potrivește filtrelor."
-                }
-                justLentId={justLentId}
-                onReturn={handleReturn}
               />
             </section>
           </>
         )}
       </main>
+      <div className="toast-region" role="status">
+        {deleted && (
+          <div className="toast">
+            <span>„{deleted.title}” a fost ștearsă.</span>
+            <button type="button" className="toast-undo" onClick={handleUndo}>
+              Anulează
+            </button>
+          </div>
+        )}
+      </div>
       <dialog
         id="lend-dialog"
         className="confirm-dialog"
@@ -277,6 +330,7 @@ export default function App() {
               <option value="worn">Uzată</option>
             </select>
           </label>
+          {lendError && <p className="error">{lendError}</p>}
           <div className="dialog-actions">
             <button
               type="button"
@@ -287,27 +341,6 @@ export default function App() {
             </button>
             <button className="btn-primary">
               Împrumută
-            </button>
-          </div>
-        </form>
-      </dialog>
-      <dialog
-        id="confirm-delete"
-        className="confirm-dialog"
-        aria-labelledby="confirm-text"
-      >
-        <form method="dialog" onSubmit={handleDeleteSubmit}>
-          <p id="confirm-text">Ștergi „{pendingBook?.title}”?</p>
-          <div className="dialog-actions">
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={() => document.getElementById("confirm-delete").close()}
-            >
-              Anulează
-            </button>
-            <button className="btn-danger">
-              Șterge
             </button>
           </div>
         </form>

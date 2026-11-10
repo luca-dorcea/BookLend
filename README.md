@@ -57,7 +57,7 @@ Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.git
 
 | Tool   | Used for                                                          |
 | ------ | ----------------------------------------------------------------- |
-| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5), loading data from a mock API (stage 6) |
+| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5), loading data from a mock API (stage 6), the add form, validation and saving changes to the API (stage 7) |
 
 Details per stage: see the `ai-log/` folder.
 
@@ -102,6 +102,18 @@ npm run api  # terminal 1, http://localhost:3001
 npm run dev  # terminal 2, http://localhost:5173
 ```
 
+## Stage 7: form and validation
+
+Books can be added from the page. The form is controlled and validated,
+and every change (add, lend, return, delete) goes to the API before it shows up
+in the list.
+
+The form ("Adaugă o carte") sits on the left, above "Cărți împrumutate"; "Biblioteca mea" is on the right.
+A new book with no reader goes on the shelf; with a reader it is lent straight away.
+In the library, "Pe raft" is ticked for books on the shelf; unticking it marks the book as lent.
+Deleting is immediate and a message at the bottom offers "Anulează" for a few seconds,
+which puts the book back. `tw.json` in the repository root describes the data for the automatic checker.
+
 ## Status
 
 - [x] Stage 1: static mockup
@@ -110,7 +122,8 @@ npm run dev  # terminal 2, http://localhost:5173
 - [x] Stage 4: components rendered from data
 - [x] Stage 5: local state and events
 - [x] Stage 6: data from a mock API
-- [ ] Stage 7: form and validation
+- [x] Stage 7: form and validation
+- [ ] Stage 8: routing and detail page
 
 ## Stage 1 checklist
 

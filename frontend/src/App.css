@@ -264,7 +264,7 @@ body {
   background: var(--bg);
   box-shadow: 0 -6px 28px var(--plaque-shadow);
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr 2fr;
   gap: 24px;
   align-items: start;
   align-content: start;
@@ -499,6 +499,70 @@ body {
   background: var(--accent-dark);
 }
 
+.item-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.item-form input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.item-form .error {
+  margin: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.toast-region {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 5;
+  transform: translateX(-50%);
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px 10px 16px;
+  border-radius: 10px;
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: 0 8px 24px var(--plaque-shadow);
+  animation: toast-in 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-undo {
+  padding: 4px 10px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.toast-undo:focus-visible {
+  outline-color: var(--bg);
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
@@ -728,13 +792,19 @@ input {
   cursor: pointer;
 }
 
-.panel-lent {
+.sidebar {
+  display: grid;
+  gap: 24px;
+  align-content: start;
   position: sticky;
   top: 16px;
   max-height: calc(100vh - 32px);
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--lent-border) transparent;
+  scrollbar-color: var(--border) transparent;
+}
+
+.panel-lent {
   background: var(--lent-surface);
   border-color: var(--lent-border);
 }
@@ -949,6 +1019,7 @@ input {
   .item-card.is-new,
   .details-chevron,
   .item-details::details-content,
+  .toast,
   .stamp.is-new,
   .item-card .badge,
   .item-card h3 {
@@ -983,7 +1054,8 @@ input {
   .filter { flex: 1 1 9rem; }
   .filter select { min-width: 0; max-width: none; width: 100%; }
   .filter-count { margin-left: 0; }
-  .panel-lent { position: static; max-height: none; order: -1; }
+  .sidebar { position: static; max-height: none; overflow: visible; }
+  .form-row { grid-template-columns: 1fr; }
   .app-header { padding-top: 64px; }
   .lamp { left: 2%; width: 84px; height: 126px; }
   .plaque { padding: 12px 16px 10px; }
