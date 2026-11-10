@@ -173,3 +173,15 @@ npm run dev  # terminal 2, http://localhost:5173
 | S5-R6 | light / dark toggle: state + data-theme on html | [App.jsx#L28-L45](https://github.com/luca-dorcea/BookLend/blob/7481eaad997d681b55f60977a509b334c257adc6/frontend/src/App.jsx#L28-L45), [App.css#L193-L217](https://github.com/luca-dorcea/BookLend/blob/7481eaad997d681b55f60977a509b334c257adc6/frontend/src/App.css#L193-L217) | click the button, both system themes |
 | S5-R7 | no console warnings; README + AI log            | [README.md#L64-L68](https://github.com/luca-dorcea/BookLend/blob/7481eaad997d681b55f60977a509b334c257adc6/README.md#L64-L68), [ai-log/etapa-05.md](https://github.com/luca-dorcea/BookLend/blob/7481eaad997d681b55f60977a509b334c257adc6/ai-log/etapa-05.md) | F12, Console |
 | S5-R8 | commit "Stage 5" pushed                         | [commit 7481eaa](https://github.com/luca-dorcea/BookLend/commit/7481eaad997d681b55f60977a509b334c257adc6) | commit history |
+
+## Stage 6 checklist
+
+| ID    | Requirement                                | Where (permalink) | How to check |
+| ----- | ------------------------------------------ | ----------------- | ------------ |
+| S6-R1 | npm run api starts, route shows JSON       | [package.json#L10 (api)](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/frontend/package.json#L10), [db.json](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/frontend/db.json) | open localhost:3001/books |
+| S6-R2 | data no longer in React code               | [App.jsx#L28 (useState([]))](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/frontend/src/App.jsx#L28), [#L40-L56 (useEffect)](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/frontend/src/App.jsx#L40-L56) | read |
+| S6-R3 | loading message while waiting              | [App.jsx#L206](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/frontend/src/App.jsx#L206) | --delay 4000 |
+| S6-R4 | error message when API is down             | [App.jsx#L207-L211](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/frontend/src/App.jsx#L207-L211) | stop npm run api, refresh |
+| S6-R5 | fetch only in api.js, URL from env         | [api.js#L1-L9](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/frontend/src/api.js#L1-L9), [.env.example](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/frontend/.env.example) | search for fetch |
+| S6-R6 | README Stage 6 section + AI log            | [README.md#L95-L103](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/README.md#L95-L103), [ai-log/etapa-06.md](https://github.com/luca-dorcea/BookLend/blob/cd00f0522e2ba1d6018dff4073153f489ba68801/ai-log/etapa-06.md) | read |
+| S6-R7 | commit "Stage 6" pushed                    | [commit cd00f05](https://github.com/luca-dorcea/BookLend/commit/cd00f0522e2ba1d6018dff4073153f489ba68801) | commit history |
