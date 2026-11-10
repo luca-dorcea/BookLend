@@ -37,6 +37,8 @@ summary {
   --focus: #3d6b4f;
   --danger: #b42318;
   --danger-soft: #fbe9e6;
+  --error-bg: #fbe9e6;
+  --error-border: #f1b8b0;
   --backdrop: rgb(20 30 25 / 0.45);
   --case-back: #cdbb9f;
   --shelf: #e6d9c2;
@@ -265,6 +267,7 @@ body {
   grid-template-columns: 3fr 2fr;
   gap: 24px;
   align-items: start;
+  align-content: start;
 }
 
 .panel {
@@ -459,6 +462,23 @@ body {
 .badge-good { background: var(--badge-good-bg); color: var(--badge-good-text); }
 .badge-worn { background: var(--badge-worn-bg); color: var(--badge-worn-text); }
 
+.info {
+  color: var(--muted);
+}
+
+.error {
+  color: var(--danger);
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.status-message {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
 .empty {
   margin: 0;
   padding: 24px;
@@ -509,6 +529,8 @@ input {
     --focus: #b9cff0;
     --danger: #f28b82;
     --danger-soft: #3a1f22;
+    --error-bg: #3b1d18;
+    --error-border: #6e2f28;
     --backdrop: rgb(0 0 0 / 0.6);
     --case-back: #1c130d;
     --shelf: #3a2618;
@@ -567,6 +589,8 @@ input {
   --focus: #b9cff0;
   --danger: #f28b82;
   --danger-soft: #3a1f22;
+  --error-bg: #3b1d18;
+  --error-border: #6e2f28;
   --backdrop: rgb(0 0 0 / 0.6);
   --case-back: #1c130d;
   --shelf: #3a2618;

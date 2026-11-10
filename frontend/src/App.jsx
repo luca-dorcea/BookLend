@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookList from "./components/BookList.jsx";
 import FilterSelect from "./components/FilterSelect.jsx";
 import LentList from "./components/LentList.jsx";
 import Bookcase from "./components/Bookcase.jsx";
 import Lamp from "./components/Lamp.jsx";
 import ThemeIcon from "./components/ThemeIcon.jsx";
-import { INITIAL_BOOKS } from "./books.js";
+import { fetchBooks } from "./api.js";
 
 const plural = new Intl.PluralRules("ro");
 
@@ -25,7 +25,9 @@ function initialTheme() {
 }
 
 export default function App() {
-  const [books, setBooks] = useState(INITIAL_BOOKS);
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [theme, setTheme] = useState(initialTheme);
   const [pendingId, setPendingId] = useState(null);
   const [lendId, setLendId] = useState(null);
@@ -34,6 +36,24 @@ export default function App() {
   const [genre, setGenre] = useState("");
   const [author, setAuthor] = useState("");
   const [reader, setReader] = useState("");
+
+  useEffect(() => {
+    let ignore = false;
+    async function load() {
+      try {
+        const data = await fetchBooks();
+        if (!ignore) setBooks(data);
+      } catch (err) {
+        if (!ignore) setError(err.message);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    }
+    load();
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   function handleLend(id) {
     setLendId(id);
@@ -183,42 +203,52 @@ export default function App() {
             {filtering ? `Se afișează ${shownBooks.length} din ${books.length}` : ""}
           </p>
         </div>
-        <section className="panel">
-          <h2 id="library-title" tabIndex={-1}>Biblioteca mea</h2>
-          <BookList
-            books={shownBooks}
-            emptyText={
-              books.length === 0
-                ? "Nu ai nicio carte în bibliotecă."
-                : "Nicio carte nu se potrivește filtrelor."
-            }
-            justLentId={justLentId}
-            onLend={handleLend}
-            onDelete={handleDelete}
-          />
-        </section>
-        <section className="panel panel-lent">
-          <h2 id="lent-title" tabIndex={-1}>Cărți împrumutate</h2>
-          {readers.length > 0 && (
-            <FilterSelect
-              label="Cititor"
-              value={activeReader}
-              options={readers}
-              allLabel="Toți cititorii"
-              onChange={setReader}
-            />
-          )}
-          <LentList
-            books={shownLent}
-            emptyText={
-              lentBooks.length === 0
-                ? "Nu ai împrumutat încă nicio carte."
-                : "Nicio carte împrumutată nu se potrivește filtrelor."
-            }
-            justLentId={justLentId}
-            onReturn={handleReturn}
-          />
-        </section>
+        {loading && <p className="info status-message">Se încarcă biblioteca…</p>}
+        {error && (
+          <p className="error status-message">
+            Nu am putut încărca datele: {error}. Rulează <code>npm run api</code>?
+          </p>
+        )}
+        {!loading && !error && (
+          <>
+            <section className="panel">
+              <h2 id="library-title" tabIndex={-1}>Biblioteca mea</h2>
+              <BookList
+                books={shownBooks}
+                emptyText={
+                  books.length === 0
+                    ? "Nu ai nicio carte în bibliotecă."
+                    : "Nicio carte nu se potrivește filtrelor."
+                }
+                justLentId={justLentId}
+                onLend={handleLend}
+                onDelete={handleDelete}
+              />
+            </section>
+            <section className="panel panel-lent">
+              <h2 id="lent-title" tabIndex={-1}>Cărți împrumutate</h2>
+              {readers.length > 0 && (
+                <FilterSelect
+                  label="Cititor"
+                  value={activeReader}
+                  options={readers}
+                  allLabel="Toți cititorii"
+                  onChange={setReader}
+                />
+              )}
+              <LentList
+                books={shownLent}
+                emptyText={
+                  lentBooks.length === 0
+                    ? "Nu ai împrumutat încă nicio carte."
+                    : "Nicio carte împrumutată nu se potrivește filtrelor."
+                }
+                justLentId={justLentId}
+                onReturn={handleReturn}
+              />
+            </section>
+          </>
+        )}
       </main>
       <dialog
         id="lend-dialog"

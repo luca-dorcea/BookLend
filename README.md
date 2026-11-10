@@ -27,20 +27,27 @@ Sample data used across all stages:
 2. Maitreyi, done (returned), new, borrower Mihai
 3. Ion, active (lent), worn, borrower Ioana
 
-From stage 5, `frontend/src/books.js` extends it to 30 books: Romanian and world prose
+From stage 5 the sample grows to 30 books: Romanian and world prose
 (novels, novellas, short stories, sketches, a fairy tale, a memoir, a journal), including
 The Hobbit and the three volumes of The Lord of the Rings. Romanian and English titles stay
 in their language, others use the English title; all other text is Romanian.
+From stage 6 the books live in `frontend/db.json` and are served by json-server.
 
 ## How to run
 
 ```
 cd frontend
 npm install
+npm run api
+```
+
+Then, in a second terminal, also in `frontend/`:
+
+```
 npm run dev
 ```
 
-Then open the address printed in the terminal (http://localhost:5173).
+Open the address printed in the terminal (http://localhost:5173). The API runs on http://localhost:3001.
 The static mockup from stages 1 and 2 is in `mockup/`.
 
 Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.github.io/BookLend/
@@ -50,7 +57,7 @@ Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.git
 
 | Tool   | Used for                                                          |
 | ------ | ----------------------------------------------------------------- |
-| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5) |
+| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5), loading data from a mock API (stage 6) |
 
 Details per stage: see the `ai-log/` folder.
 
@@ -80,10 +87,20 @@ and the counter in the header follows automatically. A button in the header swit
 between light and dark mode. Changes are lost on refresh, which is what stage 6 and stage 10 fix.
 
 The page has two lists side by side. "Biblioteca mea" holds every book, with a "Detalii"
-section (summary, author, year, genre, pages, publisher); lent books are crossed out.
+section (summary, type, genre, year, pages, publisher); lent books get a library stamp.
 "Împrumută" asks for the borrower and the condition, and the book joins "Cărți împrumutate".
 Ticking "Returnată" there sends it back. Deleting asks for confirmation first.
 Above both lists, "Tip", "Gen" and "Autor" filter the books; "Cărți împrumutate" also has a "Cititor" filter.
+
+## Stage 6: data from a mock API
+
+The books are served by json-server from `frontend/db.json`. The app fetches them on load
+and shows a loading state and an error state.
+
+```
+npm run api  # terminal 1, http://localhost:3001
+npm run dev  # terminal 2, http://localhost:5173
+```
 
 ## Status
 
@@ -92,7 +109,8 @@ Above both lists, "Tip", "Gen" and "Autor" filter the books; "Cărți împrumuta
 - [x] Stage 3: Vite and React project
 - [x] Stage 4: components rendered from data
 - [x] Stage 5: local state and events
-- [ ] Stage 6: loading data from a mock API
+- [x] Stage 6: data from a mock API
+- [ ] Stage 7: form and validation
 
 ## Stage 1 checklist
 
