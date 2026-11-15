@@ -5,6 +5,7 @@ import FilterSelect from "./components/FilterSelect.jsx";
 import LentList from "./components/LentList.jsx";
 import Bookcase from "./components/Bookcase.jsx";
 import Lamp from "./components/Lamp.jsx";
+import Shelf from "./components/Shelf.jsx";
 import ThemeIcon from "./components/ThemeIcon.jsx";
 import { createBook, deleteBook, fetchBooks, updateBook } from "./api.js";
 
@@ -29,6 +30,7 @@ export default function App() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [failed, setFailed] = useState(false);
   const [theme, setTheme] = useState(initialTheme);
   const [lendId, setLendId] = useState(null);
   const [lendError, setLendError] = useState("");
@@ -46,7 +48,10 @@ export default function App() {
         const data = await fetchBooks();
         if (!ignore) setBooks(data);
       } catch (err) {
-        if (!ignore) setError(`Nu am putut încărca datele: ${err.message}.`);
+        if (!ignore) {
+          setError(`Nu am putut încărca datele: ${err.message}.`);
+          setFailed(true);
+        }
       } finally {
         if (!ignore) setLoading(false);
       }
@@ -176,7 +181,6 @@ export default function App() {
     <>
       <div className="backdrop" aria-hidden="true">
         <Bookcase />
-        <Lamp />
       </div>
       <a className="skip-link" href="#library-title">
         Sari la lista de cărți
@@ -191,50 +195,59 @@ export default function App() {
         >
           <ThemeIcon theme={theme} />
         </button>
-        <div className="plaque">
+        <div className="header-inner">
+          <Lamp />
+          <div className="lamp-pool lamp-light" aria-hidden="true" />
           <h1 translate="no">BookLend</h1>
-          <p>Ține evidența cărților împrumutate prietenilor și familiei.</p>
-          <p className="app-count">
-            {booksText}, dintre care {lentText}
-          </p>
+          <Shelf books={books} />
+          <div className="shelf-label">
+            <p>Ține evidența cărților împrumutate prietenilor și familiei.</p>
+            {!loading && !failed && (
+              <p className="app-count">
+                {booksText}, dintre care {lentText}
+              </p>
+            )}
+          </div>
         </div>
       </header>
       <main className="container">
-        <div className="filters" role="group" aria-label="Filtre">
-          <FilterSelect
-            label="Tip"
-            value={activeType}
-            options={types}
-            allLabel="Toate tipurile"
-            onChange={setType}
-          />
-          <FilterSelect
-            label="Gen"
-            value={activeGenre}
-            options={genres}
-            allLabel="Toate genurile"
-            onChange={setGenre}
-          />
-          <FilterSelect
-            label="Autor"
-            value={activeAuthor}
-            options={authors}
-            allLabel="Toți autorii"
-            onChange={setAuthor}
-          />
-          {(filtering || activeReader) && (
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={handleResetFilters}
-            >
-              Resetează filtrele
-            </button>
-          )}
-          <p className="filter-count" aria-live="polite">
-            {filtering ? `Se afișează ${shownBooks.length} din ${books.length}` : ""}
-          </p>
-        </div>
+        {!failed && (
+          <div className="filters" role="group" aria-label="Filtre">
+            <FilterSelect
+              label="Tip"
+              value={activeType}
+              options={types}
+              allLabel="Toate tipurile"
+              onChange={setType}
+            />
+            <FilterSelect
+              label="Gen"
+              value={activeGenre}
+              options={genres}
+              allLabel="Toate genurile"
+              onChange={setGenre}
+            />
+            <FilterSelect
+              label="Autor"
+              value={activeAuthor}
+              options={authors}
+              allLabel="Toți autorii"
+              onChange={setAuthor}
+            />
+            {(filtering || activeReader) && (
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={handleResetFilters}
+              >
+                Resetează filtrele
+              </button>
+            )}
+            <p className="filter-count" aria-live="polite">
+              {filtering ? `Se afișează ${shownBooks.length} din ${books.length}` : ""}
+            </p>
+          </div>
+        )}
         {loading && (
           <p className="info status-message" data-testid="loading">
             Se încarcă biblioteca…
@@ -248,48 +261,52 @@ export default function App() {
         {!loading && (
           <>
             <aside className="sidebar">
-              <section className="panel panel-lent">
-                <h2 id="lent-title" tabIndex={-1}>Cărți împrumutate</h2>
-                {readers.length > 0 && (
-                  <FilterSelect
-                    label="Cititor"
-                    value={activeReader}
-                    options={readers}
-                    allLabel="Toți cititorii"
-                    onChange={setReader}
+              {!failed && (
+                <section className="panel panel-lent">
+                  <h2 id="lent-title" tabIndex={-1}>Cărți împrumutate</h2>
+                  {readers.length > 0 && (
+                    <FilterSelect
+                      label="Cititor"
+                      value={activeReader}
+                      options={readers}
+                      allLabel="Toți cititorii"
+                      onChange={setReader}
+                    />
+                  )}
+                  <LentList
+                    books={shownLent}
+                    emptyText={
+                      lentBooks.length === 0
+                        ? "Nu ai împrumutat încă nicio carte."
+                        : "Nicio carte împrumutată nu se potrivește filtrelor."
+                    }
+                    justLentId={justLentId}
+                    onReturn={handleToggle}
                   />
-                )}
-                <LentList
-                  books={shownLent}
-                  emptyText={
-                    lentBooks.length === 0
-                      ? "Nu ai împrumutat încă nicio carte."
-                      : "Nicio carte împrumutată nu se potrivește filtrelor."
-                  }
-                  justLentId={justLentId}
-                  onReturn={handleToggle}
-                />
-              </section>
+                </section>
+              )}
               <section className="panel panel-form">
                 <h2>Adaugă o carte</h2>
                 <BookForm onAdd={handleAdd} />
               </section>
             </aside>
-            <section className="panel">
-              <h2 id="library-title" tabIndex={-1}>Biblioteca mea</h2>
-              <BookList
-                books={shownBooks}
-                emptyText={
-                  books.length === 0
-                    ? "Nu ai nicio carte în bibliotecă."
-                    : "Nicio carte nu se potrivește filtrelor."
-                }
-                justLentId={justLentId}
-                onLend={handleLend}
-                onToggle={handleToggle}
-                onDelete={handleDelete}
-              />
-            </section>
+            {!failed && (
+              <section className="panel">
+                <h2 id="library-title" tabIndex={-1}>Biblioteca mea</h2>
+                <BookList
+                  books={shownBooks}
+                  emptyText={
+                    books.length === 0
+                      ? "Nu ai nicio carte în bibliotecă."
+                      : "Nicio carte nu se potrivește filtrelor."
+                  }
+                  justLentId={justLentId}
+                  onLend={handleLend}
+                  onToggle={handleToggle}
+                  onDelete={handleDelete}
+                />
+              </section>
+            )}
           </>
         )}
       </main>

@@ -1,10 +1,10 @@
 import { spineCloth, spineWidth } from "../spine.js";
 
-export default function Spine({ book, height, showTitle }) {
+export default function Spine({ book, showTitle }) {
   return (
     <span
       className={`book-spine cloth-${spineCloth(book.title)}`}
-      style={{ width: spineWidth(book.pages), height }}
+      style={{ "--w": spineWidth(book.pages) }}
       aria-hidden="true"
     >
       <span className="spine-cap">{book.id}</span>
