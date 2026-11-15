@@ -1,5 +1,6 @@
 import { CONDITION_LABELS } from "../conditions.js";
 import { toDative } from "../dative.js";
+import Spine from "./Spine.jsx";
 
 export default function BookCard({ book, isNew, onLend, onToggle, onDelete }) {
   const isLent = !book.returned;
@@ -17,6 +18,9 @@ export default function BookCard({ book, isNew, onLend, onToggle, onDelete }) {
       data-testid="item"
       data-id={book.id}
     >
+      <span className="spine-slot">
+        <Spine book={book} />
+      </span>
       <div className="item-main">
         <h3 data-testid="item-title">{book.title}</h3>
         <div className="item-meta">
