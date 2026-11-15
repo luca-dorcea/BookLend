@@ -248,10 +248,6 @@ export default function App() {
         {!loading && (
           <>
             <aside className="sidebar">
-              <section className="panel">
-                <h2>Adaugă o carte</h2>
-                <BookForm onAdd={handleAdd} />
-              </section>
               <section className="panel panel-lent">
                 <h2 id="lent-title" tabIndex={-1}>Cărți împrumutate</h2>
                 {readers.length > 0 && (
@@ -273,6 +269,10 @@ export default function App() {
                   justLentId={justLentId}
                   onReturn={handleToggle}
                 />
+              </section>
+              <section className="panel panel-form">
+                <h2>Adaugă o carte</h2>
+                <BookForm onAdd={handleAdd} />
               </section>
             </aside>
             <section className="panel">

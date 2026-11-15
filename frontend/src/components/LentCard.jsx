@@ -5,10 +5,12 @@ export default function LentCard({ book, isNew, onReturn }) {
     <li className={isNew ? "item-card is-new" : "item-card"}>
       <div className="item-main">
         <h3>{book.title}</h3>
-        {book.borrower && <p className="borrower">Cititor: {book.borrower}</p>}
-        <span className={`badge badge-${book.condition}`}>
-          Stare: {CONDITION_LABELS[book.condition]}
-        </span>
+        <div className="item-meta">
+          {book.borrower && <p className="borrower">Cititor: {book.borrower}</p>}
+          <span className={`badge badge-${book.condition}`}>
+            Stare: {CONDITION_LABELS[book.condition]}
+          </span>
+        </div>
       </div>
       <label className="return-toggle">
         <input

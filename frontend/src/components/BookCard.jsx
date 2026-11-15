@@ -19,10 +19,12 @@ export default function BookCard({ book, isNew, onLend, onToggle, onDelete }) {
     >
       <div className="item-main">
         <h3 data-testid="item-title">{book.title}</h3>
-        {book.author && <p className="author">{book.author}</p>}
-        <span className={`badge badge-${book.condition}`}>
-          Stare: {CONDITION_LABELS[book.condition]}
-        </span>
+        <div className="item-meta">
+          {book.author && <p className="author">{book.author}</p>}
+          <span className={`badge badge-${book.condition}`}>
+            Stare: {CONDITION_LABELS[book.condition]}
+          </span>
+        </div>
         {(book.summary || facts.length > 0) && (
           <details className="item-details">
             <summary aria-label={`Detalii despre ${book.title}`}>
