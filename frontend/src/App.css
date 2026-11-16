@@ -47,7 +47,6 @@ summary {
   --shelf-edge: #f3ead9;
   --lamp-shade: #1f2328;
   --lamp-light: #ffd27a;
-  --lamp-cone-alpha: 0.4;
   --lamp-halo-alpha: 0.6;
   --lamp-cord: #2a1f16;
   --plaque-bg: #fbf6ea;
@@ -65,7 +64,7 @@ summary {
   --cloth-black: #2a2623;
   --cloth-cap: #efe3c8;
   --cloth-ink: #2a2623;
-  --slip-bg: #f3e3b5;
+  --slip-bg: #f4e9c8;
   --slip-text: #4a3fa0;
   --slip-ink: #2b2219;
   --slip-muted: #6c6052;
@@ -99,8 +98,8 @@ body {
   z-index: -1;
   background-color: var(--case-back);
   background-image:
-    repeating-linear-gradient(90deg, rgb(0 0 0 / 0.022) 0 2px, transparent 2px 7px),
-    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.03) 0 3px, transparent 3px 23px);
+    repeating-linear-gradient(90deg, rgb(0 0 0 / 0.008) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.01) 0 3px, transparent 3px 23px);
   transition: background-color 900ms ease-in-out;
 }
 
@@ -181,12 +180,12 @@ body {
 
 .lamp-pool {
   position: absolute;
-  top: 30px;
-  left: -150px;
+  top: 66px;
+  left: -172px;
   z-index: 2;
-  width: 480px;
-  height: 330px;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--lamp-light) 46%, transparent), transparent);
+  width: 520px;
+  height: 300px;
+  background: radial-gradient(ellipse at top, color-mix(in srgb, var(--lamp-light) 52%, transparent), transparent 70%);
   pointer-events: none;
 }
 
@@ -202,17 +201,13 @@ body {
   transition: fill 300ms ease-out 250ms;
 }
 
-.lamp-cone-start,
 .lamp-halo-start,
-.lamp-cone-end,
 .lamp-halo-end {
   stop-color: var(--lamp-light);
   transition: stop-color 300ms ease-out 250ms;
 }
 
-.lamp-cone-start { stop-opacity: var(--lamp-cone-alpha); }
 .lamp-halo-start { stop-opacity: var(--lamp-halo-alpha); }
-.lamp-cone-end,
 .lamp-halo-end { stop-opacity: 0; }
 
 :root[data-theme="dark"] .lamp-light {
@@ -313,7 +308,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 66%;
+  height: 42%;
   overflow: hidden;
   border-radius: 1px;
   background: var(--slip-bg);
@@ -483,6 +478,10 @@ h3 {
 
 .panel-lent .filter {
   margin: 12px 0 4px;
+}
+
+.filter-count:empty {
+  display: none;
 }
 
 .filter-count {
@@ -834,7 +833,6 @@ input {
     --shelf-edge: #604029;
     --lamp-shade: #15181d;
     --lamp-light: #cfe4ff;
-    --lamp-cone-alpha: 0.3;
     --lamp-halo-alpha: 0.45;
     --lamp-cord: #090c12;
     --plaque-bg: #402e21;
@@ -884,7 +882,6 @@ input {
   --shelf-edge: #604029;
   --lamp-shade: #15181d;
   --lamp-light: #cfe4ff;
-  --lamp-cone-alpha: 0.3;
   --lamp-halo-alpha: 0.45;
   --lamp-cord: #090c12;
   --plaque-bg: #402e21;
@@ -1237,24 +1234,24 @@ input {
 }
 
 @media (max-width: 900px) {
-  .container { grid-template-columns: minmax(250px, 2fr) 3fr; gap: 28px; }
-  .form-row { grid-template-columns: 1fr; }
-  .item-card { flex-wrap: wrap; }
-  .item-main { flex-basis: calc(100% - 42px); }
-  .item-actions { flex-wrap: wrap; margin-left: 42px; }
+  .container { grid-template-columns: 1fr; }
+  .sidebar { display: contents; }
+  .panel-form { order: 1; }
+  .filters { order: -2; }
 }
 
 @media (max-width: 700px) {
   .container { grid-template-columns: 1fr; padding: 20px 16px 40px; }
-  .sidebar { display: contents; }
-  .panel-form { order: 1; }
-  .filters { order: -2; }
+  .form-row { grid-template-columns: 1fr; }
+  .item-card { flex-wrap: wrap; }
+  .item-main { flex-basis: calc(100% - 42px); }
+  .shelf .spine-title { display: none; }
   .filter { flex: 1 1 9rem; }
   .filter select { min-width: 0; max-width: none; width: 100%; }
   .filter-count { margin-left: 0; }
   .header-inner { --spine-scale: 0.75; padding: 0 16px; }
   .lamp { left: 6px; width: 84px; height: 126px; }
-  .lamp-pool { top: 10px; left: -130px; width: 360px; height: 250px; }
+  .lamp-pool { top: 46px; left: -132px; width: 360px; height: 230px; }
   .app-header h1 { margin-left: 92px; padding-top: 22px; }
   .shelf { margin: 14px -16px 0; }
   .shelf-row { padding: 0 16px; }
@@ -1274,6 +1271,6 @@ input {
   .item-details summary { min-height: 44px; }
   .item-form button { align-self: stretch; }
   .return-toggle { padding: 0 4px; }
-  .item-actions { gap: 8px; }
+  .item-actions { flex-wrap: wrap; gap: 8px; }
   .toast-region { right: 16px; left: 16px; display: flex; justify-content: center; transform: none; }
 }

@@ -66,7 +66,7 @@ export default function BookCard({ book, isNew, onLend, onToggle, onDelete }) {
         {isLent ? (
           <span
             className={isNew ? "stamp is-new" : "stamp"}
-            style={{ "--tilt": `${(book.id % 5) - 3}deg` }}
+            style={{ "--tilt": `${-2 - (book.id % 4)}deg` }}
           >
             Împrumutată
             {book.borrower && <span className="stamp-name">{toDative(book.borrower)}</span>}
