@@ -11,7 +11,10 @@ export default function Spine({ book, showTitle, className }) {
       aria-hidden="true"
     >
       <span className={styles.cap}>{book.id}</span>
-      {showTitle && <span className={styles.title}>{book.title}</span>}
+      <span className={styles.band} />
+      <span className={styles.title}>{showTitle && book.title}</span>
+      <span className={styles.band} />
+      <span className={styles.emblem} />
     </span>
   );
 }

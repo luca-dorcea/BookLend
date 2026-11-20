@@ -27,14 +27,35 @@
 .title {
   flex: 1;
   min-height: 0;
-  padding: 6px 0;
+  padding: 0.4em 0;
   overflow: hidden;
+  font-size: clamp(1em, 30cqw, 1.3em);
   letter-spacing: 0.04em;
+  text-align: center;
   text-overflow: ellipsis;
-  text-transform: lowercase;
-  white-space: nowrap;
+  text-wrap: balance;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
+}
+
+.band {
+  flex: none;
+  width: 70%;
+  height: 0.45em;
+  margin: 0.35em 0;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  opacity: 0.7;
+}
+
+.emblem {
+  flex: none;
+  width: 50%;
+  height: 0.55em;
+  margin-bottom: 0.5em;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.7;
 }
 
 .red { --cloth: var(--cloth-red); }
@@ -45,14 +66,23 @@
 .turquoise { --cloth: var(--cloth-turquoise); }
 .black { --cloth: var(--cloth-black); }
 
+@container (max-width: 33.9px) {
+  .title { white-space: nowrap; }
+}
+
 @container (max-width: 13.9px) {
-  .title { display: none; }
+  .title { visibility: hidden; }
 }
 
 @container (max-width: 11.9px) {
   .cap { font-size: 0; }
 }
 
+@media (max-width: 999px) {
+  .band,
+  .emblem { display: none; }
+}
+
 @media (max-width: 700px) {
-  .title { display: none; }
+  .title { visibility: hidden; }
 }
