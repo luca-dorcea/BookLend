@@ -86,7 +86,7 @@
 }
 
 @media (max-width: 999px) {
-  .shelf { --spine-scale: 1.15; }
+  .shelf { --spine-scale: 1.4; }
 }
 
 @media (max-width: 700px) {

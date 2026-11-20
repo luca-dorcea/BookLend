@@ -24,18 +24,35 @@
   text-align: center;
 }
 
-.title {
+.text {
   flex: 1;
+  align-self: stretch;
   min-height: 0;
-  padding: 6px 2px;
+  padding: 6px 0;
   overflow: hidden;
+  align-content: center;
+  text-align: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.title {
+  display: block;
   letter-spacing: 0.04em;
   line-height: 1.05;
   text-transform: lowercase;
   overflow-wrap: anywhere;
   hyphens: auto;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+}
+
+.author {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .red { --cloth: var(--cloth-red); }
@@ -46,14 +63,34 @@
 .turquoise { --cloth: var(--cloth-turquoise); }
 .black { --cloth: var(--cloth-black); }
 
+@container (max-width: 29.9px) {
+  .long .author { display: none; }
+}
+
+@container (max-width: 21.9px) {
+  .author { display: none; }
+}
+
+@container (max-width: 23.9px) {
+  .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 @container (max-width: 13.9px) {
-  .title { display: none; }
+  .text { display: none; }
 }
 
 @container (max-width: 11.9px) {
   .cap { font-size: 0; }
 }
 
+@media (max-width: 999px) {
+  .author { display: none; }
+}
+
 @media (max-width: 700px) {
-  .title { display: none; }
+  .text { display: none; }
 }
