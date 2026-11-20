@@ -108,7 +108,7 @@ Books can be added from the page. The form is controlled and validated,
 and every change (add, lend, return, delete) goes to the API before it shows up
 in the list.
 
-The form ("Adaugă o carte") sits on the left, above "Cărți împrumutate"; "Biblioteca mea" is on the right.
+The form ("Adaugă o carte") sits on the left, under "Cărți împrumutate"; "Biblioteca mea" is on the right.
 A new book with no reader goes on the shelf; with a reader it is lent straight away.
 In the library, "Pe raft" is ticked for books on the shelf; unticking it marks the book as lent.
 Deleting is immediate and a message at the bottom offers "Anulează" for a few seconds,

@@ -1,10 +1,11 @@
+import styles from "./ThemeIcon.module.css";
+
 export default function ThemeIcon({ theme }) {
   if (theme === "dark") {
     return (
       <svg
+        className={styles.icon}
         viewBox="0 0 24 24"
-        width="20"
-        height="20"
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
@@ -19,9 +20,8 @@ export default function ThemeIcon({ theme }) {
 
   return (
     <svg
+      className={styles.icon}
       viewBox="0 0 24 24"
-      width="20"
-      height="20"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
