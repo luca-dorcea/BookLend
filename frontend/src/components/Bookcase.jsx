@@ -1,5 +1,6 @@
 import Spine from "./Spine.jsx";
 import { spineHeight, spineWidth } from "../spine.js";
+import styles from "./Bookcase.module.css";
 
 const LEFT_SHELVES = [
   ["doină", "baladă", "pastel", "fabulă", "nuvelă", "roman", "schiță", "epopee"],
@@ -21,21 +22,21 @@ function sideBook(word) {
 
 function SideShelves({ side, shelves }) {
   return (
-    <div className={`case-side case-${side}`}>
+    <div className={`${styles.side} ${side}`}>
       {shelves.map((words) => (
-        <div key={words[0]} className="side-shelf">
-          <div className="side-row">
+        <div key={words[0]} className={styles.shelf}>
+          <div className={styles.row}>
             {words.map(sideBook).map((book) => (
               <span
                 key={book.title}
-                className="shelf-book"
+                className={styles.book}
                 style={{ "--w": spineWidth(book.pages), "--h": spineHeight(book.title) }}
               >
-                <Spine book={book} />
+                <Spine book={book} className={styles.spine} />
               </span>
             ))}
           </div>
-          <div className="shelf-board" />
+          <div className={styles.board} />
         </div>
       ))}
     </div>
@@ -44,9 +45,9 @@ function SideShelves({ side, shelves }) {
 
 export default function Bookcase() {
   return (
-    <div className="bookcase">
-      <SideShelves side="left" shelves={LEFT_SHELVES} />
-      <SideShelves side="right" shelves={RIGHT_SHELVES} />
+    <div className={styles.backdrop} aria-hidden="true">
+      <SideShelves side={styles.left} shelves={LEFT_SHELVES} />
+      <SideShelves side={styles.right} shelves={RIGHT_SHELVES} />
     </div>
   );
 }

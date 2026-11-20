@@ -1,0 +1,143 @@
+.skip {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 4;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--text);
+}
+
+.skip:focus-visible {
+  top: 12px;
+}
+
+.header {
+  position: relative;
+  padding-bottom: 14px;
+  color: var(--plaque-text);
+  transition: color 900ms ease-in-out;
+}
+
+.toggle {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--plaque-border);
+  border-radius: 50%;
+  background: var(--plaque-bg);
+  color: var(--plaque-text);
+  cursor: pointer;
+  transition: background-color 150ms ease-out, color 900ms ease-in-out, border-color 900ms ease-in-out;
+}
+
+.toggle:hover {
+  background: var(--header-hover);
+}
+
+.toggle:focus-visible {
+  outline-color: var(--text);
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 32px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.logo {
+  margin: 0 0 0 150px;
+  padding-top: 30px;
+  font-size: var(--fs-xxl);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.nav {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  gap: 4px 20px;
+}
+
+.link {
+  padding: 6px 2px 4px;
+  border-bottom: 2px solid transparent;
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 150ms ease-out;
+}
+
+.link:hover {
+  border-bottom-color: var(--plaque-border);
+}
+
+.active,
+.active:hover {
+  border-bottom-color: currentColor;
+}
+
+.main {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.main:focus {
+  outline: none;
+}
+
+.footer {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 28px 28px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: var(--fs-s);
+  text-align: center;
+}
+
+@media (max-width: 1279px) {
+  .toggle {
+    position: absolute;
+  }
+}
+
+@media (max-width: 700px) {
+  .inner {
+    padding: 0 16px;
+  }
+
+  .logo {
+    margin-left: 92px;
+    padding-top: 22px;
+  }
+
+  .nav {
+    width: 100%;
+    margin-left: 92px;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .footer {
+    padding: 0 16px 24px;
+  }
+}

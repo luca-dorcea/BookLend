@@ -1,4 +1,5 @@
 import LentCard from "./LentCard.jsx";
+import styles from "./LentList.module.css";
 
 export default function LentList({ books, emptyText, justLentId, onReturn }) {
   if (books.length === 0) {
@@ -6,7 +7,7 @@ export default function LentList({ books, emptyText, justLentId, onReturn }) {
   }
 
   return (
-    <ul className="item-list">
+    <ul className={styles.list}>
       {books.map((book) => (
         <LentCard
           key={book.id}

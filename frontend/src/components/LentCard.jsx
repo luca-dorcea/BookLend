@@ -1,19 +1,23 @@
-import { CONDITION_LABELS } from "../conditions.js";
+import { Link } from "react-router-dom";
+import { CONDITION_LABELS } from "../constants.js";
+import styles from "./LentCard.module.css";
 
 export default function LentCard({ book, isNew, onReturn }) {
   return (
-    <li className={isNew ? "item-card lent-slip is-new" : "item-card lent-slip"}>
-      <h3>{book.title}</h3>
+    <li className={isNew ? `${styles.slip} ${styles.isNew}` : styles.slip}>
+      <h3 className={styles.title}>
+        <Link to={`/books/${book.id}`}>{book.title}</Link>
+      </h3>
       {book.borrower && (
-        <p className="borrower">
-          Cititor: <span className="slip-hand">{book.borrower}</span>
+        <p className={styles.borrower}>
+          Cititor: <span className={styles.hand}>{book.borrower}</span>
         </p>
       )}
-      <div className="slip-foot">
+      <div className={styles.foot}>
         <span className={`badge badge-${book.condition}`}>
-          Stare: {CONDITION_LABELS[book.condition]}
+          Stare: {CONDITION_LABELS[book.condition].toLowerCase()}
         </span>
-        <label className="return-toggle">
+        <label className="check">
           <input
             type="checkbox"
             checked={book.returned}

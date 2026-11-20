@@ -1,14 +1,17 @@
 import { spineCloth, spineWidth } from "../spine.js";
+import styles from "./Spine.module.css";
 
-export default function Spine({ book, showTitle }) {
+export default function Spine({ book, showTitle, className }) {
+  const cloth = styles[spineCloth(book.title)];
+
   return (
     <span
-      className={`book-spine cloth-${spineCloth(book.title)}`}
+      className={`${styles.spine} ${cloth} ${className ?? ""}`}
       style={{ "--w": spineWidth(book.pages) }}
       aria-hidden="true"
     >
-      <span className="spine-cap">{book.id}</span>
-      {showTitle && <span className="spine-title">{book.title}</span>}
+      <span className={styles.cap}>{book.id}</span>
+      {showTitle && <span className={styles.title}>{book.title}</span>}
     </span>
   );
 }

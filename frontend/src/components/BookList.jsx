@@ -1,4 +1,5 @@
 import BookCard from "./BookCard.jsx";
+import styles from "./BookList.module.css";
 
 export default function BookList({ books, emptyText, justLentId, onLend, onToggle, onDelete }) {
   if (books.length === 0) {
@@ -10,7 +11,7 @@ export default function BookList({ books, emptyText, justLentId, onLend, onToggl
   }
 
   return (
-    <ul className="item-list">
+    <ul className={styles.list}>
       {books.map((book) => (
         <BookCard
           key={book.id}

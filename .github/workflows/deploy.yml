@@ -29,9 +29,11 @@ jobs:
         run: npm ci
       - name: Build
         working-directory: frontend
-        run: npm run build -- --base=./
-      - name: Add the mockup
-        run: cp -r mockup frontend/dist/mockup
+        run: npm run build -- --base=/BookLend/
+      - name: Add the mockup and the page for deep links
+        run: |
+          cp -r mockup frontend/dist/mockup
+          cp frontend/dist/index.html frontend/dist/404.html
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

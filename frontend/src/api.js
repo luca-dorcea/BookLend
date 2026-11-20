@@ -15,6 +15,10 @@ export function fetchBooks() {
   return request("/books");
 }
 
+export function fetchBook(id) {
+  return request(`/books/${id}`);
+}
+
 export function createBook(book) {
   return request("/books", { method: "POST", body: JSON.stringify(book) });
 }

@@ -1,11 +1,7 @@
 import { useState } from "react";
+import { CONDITIONS, TYPES } from "../constants.js";
+import styles from "./BookForm.module.css";
 
-const TYPES = ["Roman", "Nuvelă", "Povestiri", "Schițe", "Basm", "Memorii", "Jurnal", "Poveste"];
-const CONDITIONS = [
-  { value: "new", label: "Nouă" },
-  { value: "good", label: "Bună" },
-  { value: "worn", label: "Uzată" },
-];
 const MAX_TITLE = 100;
 const MAX_AUTHOR = 60;
 const MAX_BORROWER = 50;
@@ -67,7 +63,7 @@ export default function BookForm({ onAdd }) {
   }
 
   return (
-    <form className="item-form" onSubmit={handleSubmit} noValidate data-testid="form">
+    <form className={styles.form} onSubmit={handleSubmit} noValidate data-testid="form">
       <label>
         Titlul cărții
         <input
@@ -94,7 +90,7 @@ export default function BookForm({ onAdd }) {
           data-testid="form-author"
         />
       </label>
-      <div className="form-row">
+      <div className={styles.row}>
         <label>
           Tip
           <select value={type} onChange={(e) => setType(e.target.value)} data-testid="form-type">
@@ -133,7 +129,7 @@ export default function BookForm({ onAdd }) {
           aria-describedby="borrower-hint"
           data-testid="form-borrower"
         />
-        <span id="borrower-hint" className="field-hint">
+        <span id="borrower-hint" className={styles.hint}>
           Lasă gol dacă rămâne pe raft.
         </span>
       </label>
@@ -142,7 +138,12 @@ export default function BookForm({ onAdd }) {
           {error}
         </p>
       )}
-      <button type="submit" disabled={sending} data-testid="form-submit">
+      <button
+        type="submit"
+        className={`btn btn-primary ${styles.submit}`}
+        disabled={sending}
+        data-testid="form-submit"
+      >
         {sending ? "Se salvează…" : "Adaugă cartea"}
       </button>
     </form>

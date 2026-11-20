@@ -1,0 +1,25 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--muted);
+  font-size: var(--fs-s);
+  font-weight: 700;
+}
+
+.filter select {
+  min-width: 10rem;
+  max-width: 18rem;
+}
+
+@media (max-width: 700px) {
+  .filter {
+    flex: 1 1 9rem;
+  }
+
+  .filter select {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+}

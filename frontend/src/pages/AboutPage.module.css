@@ -1,0 +1,10 @@
+.about {
+  max-width: 62ch;
+}
+
+.about p {
+  margin: 14px 0 0;
+  font-size: var(--fs-l);
+  line-height: 1.6;
+  text-wrap: pretty;
+}

@@ -1,0 +1,12 @@
+.notFound {
+  max-width: 62ch;
+}
+
+.notFound p {
+  margin: 14px 0 16px;
+  font-size: var(--fs-l);
+}
+
+.back {
+  font-weight: 700;
+}

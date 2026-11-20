@@ -1,86 +1,43 @@
-import { CONDITION_LABELS } from "../conditions.js";
-import { toDative } from "../dative.js";
+import { Link } from "react-router-dom";
+import { CONDITION_LABELS } from "../constants.js";
 import Spine from "./Spine.jsx";
+import Stamp from "./Stamp.jsx";
+import styles from "./BookCard.module.css";
 
 export default function BookCard({ book, isNew, onLend, onToggle, onDelete }) {
   const isLent = !book.returned;
-  const facts = [
-    { label: "Tip", value: book.type },
-    { label: "Gen", value: book.genre },
-    { label: "Apărută în", value: book.year },
-    { label: "Pagini", value: book.pages },
-    { label: "Editura", value: book.publisher },
-  ].filter((fact) => fact.value);
 
   return (
-    <li
-      className={isLent ? "item-card lent" : "item-card"}
-      data-testid="item"
-      data-id={book.id}
-    >
-      <span className="spine-slot">
+    <li className={styles.card} data-testid="item" data-id={book.id}>
+      <span className={styles.slot}>
         <Spine book={book} />
       </span>
-      <div className="item-main">
-        <h3 data-testid="item-title">{book.title}</h3>
-        <div className="item-meta">
-          {book.author && <p className="author">{book.author}</p>}
+      <div className={styles.main}>
+        <h3 className={styles.heading}>
+          <Link to={`/books/${book.id}`} className={styles.title} data-testid="item-link">
+            {book.title}
+          </Link>
+        </h3>
+        <div className={styles.meta}>
+          {book.author && <p className={styles.author}>{book.author}</p>}
           <span className={`badge badge-${book.condition}`}>
-            Stare: {CONDITION_LABELS[book.condition]}
+            Stare: {CONDITION_LABELS[book.condition].toLowerCase()}
           </span>
         </div>
-        {(book.summary || facts.length > 0) && (
-          <details className="item-details">
-            <summary aria-label={`Detalii despre ${book.title}`}>
-              Detalii
-              <svg
-                className="details-chevron"
-                viewBox="0 0 24 24"
-                width="16"
-                height="16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </summary>
-            {book.summary && <p className="item-summary">{book.summary}</p>}
-            {facts.length > 0 && (
-              <dl className="item-facts">
-                {facts.map((fact) => (
-                  <div key={fact.label}>
-                    <dt>{fact.label}</dt>
-                    <dd>{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-          </details>
-        )}
       </div>
-      <div className="item-actions">
+      <div className={styles.actions}>
         {isLent ? (
-          <span
-            className={isNew ? "stamp is-new" : "stamp"}
-            style={{ "--tilt": `${-2 - (book.id % 4)}deg` }}
-          >
-            Împrumutată
-            {book.borrower && <span className="stamp-name">{toDative(book.borrower)}</span>}
-          </span>
+          <Stamp borrower={book.borrower} tilt={-2 - (book.id % 4)} isNew={isNew} />
         ) : (
           <button
-            className="btn-outline"
+            className="btn btn-outline"
             onClick={() => onLend(book.id)}
             aria-label={`Împrumută ${book.title}`}
           >
             Împrumută
           </button>
         )}
-        <label className="return-toggle">
+        <label className="check">
           <input
             type="checkbox"
             checked={book.returned}
@@ -91,7 +48,7 @@ export default function BookCard({ book, isNew, onLend, onToggle, onDelete }) {
           Pe raft
         </label>
         <button
-          className="btn-quiet-danger"
+          className="btn btn-quiet-danger"
           onClick={() => onDelete(book.id)}
           aria-label={`Șterge ${book.title}`}
           data-testid="item-delete"

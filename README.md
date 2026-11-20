@@ -57,7 +57,7 @@ Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.git
 
 | Tool   | Used for                                                          |
 | ------ | ----------------------------------------------------------------- |
-| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5), loading data from a mock API (stage 6), the add form, validation and saving changes to the API (stage 7) |
+| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5), loading data from a mock API (stage 6), the add form, validation and saving changes to the API (stage 7), routing, the detail page and CSS Modules (stage 8), the visual redesign |
 
 Details per stage: see the `ai-log/` folder.
 
@@ -114,6 +114,19 @@ In the library, "Pe raft" is ticked for books on the shelf; unticking it marks t
 Deleting is immediate and a message at the bottom offers "Anulează" for a few seconds,
 which puts the book back. `tw.json` in the repository root describes the data for the automatic checker.
 
+## Stage 8: routing and detail page
+
+Four pages behind React Router, inside one shared layout (header with the navigation, footer):
+the library at `/`, a detail page for each book at `/books/:id`, an about page at `/despre`,
+and a 404 page for any other address. A book's title in the list opens its detail page,
+which asks the server for that one book and shows what does not fit in a row: the summary,
+year, pages, publisher and genre. Component styles moved to CSS Modules (`*.module.css`
+next to each component); `src/index.css` keeps only the color variables and the shared classes.
+
+The look was also reworked before this stage: the shelf at the top draws one spine per book
+from the data (a lent book leaves a gap with the reader's name), each row has a matching spine,
+and three fonts are bundled with npm, so run `npm install` once after pulling.
+
 ## Status
 
 - [x] Stage 1: static mockup
@@ -123,7 +136,8 @@ which puts the book back. `tw.json` in the repository root describes the data fo
 - [x] Stage 5: local state and events
 - [x] Stage 6: data from a mock API
 - [x] Stage 7: form and validation
-- [ ] Stage 8: routing and detail page
+- [x] Stage 8: routing and detail page
+- [ ] Stage 9: own backend with Express
 
 ## Stage 1 checklist
 
