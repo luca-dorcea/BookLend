@@ -18,10 +18,6 @@ export function spineHeight(title) {
   return HEIGHTS[titleSum(title) % HEIGHTS.length];
 }
 
-export function spineAuthor(author) {
-  return author.trim().split(" ").pop();
-}
-
 export function spineWidth(pages) {
   if (!pages) return 16;
   return Math.min(30, Math.max(12, Math.round(pages / 22)));
