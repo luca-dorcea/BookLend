@@ -50,7 +50,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 42%;
+  min-height: 42%;
+  max-height: 100%;
+  padding: 6px 0;
   overflow: hidden;
   border-radius: 1px;
   background: var(--slip-bg);
@@ -65,17 +67,30 @@
   transition-delay: 200ms;
 }
 
-.name {
-  font-family: var(--font-hand);
-  font-size: var(--fs-xs);
+.slipText {
+  font-size: var(--fs-spine);
   line-height: 1;
   white-space: nowrap;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
 
+.number {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.name {
+  font-family: var(--font-hand);
+  font-size: var(--fs-xs);
+}
+
 @container (max-width: 19.9px) {
   .name { display: none; }
+}
+
+@container (max-width: 11.9px) {
+  .number { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

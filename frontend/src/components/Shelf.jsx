@@ -24,7 +24,10 @@ export default function Shelf({ books }) {
               >
                 <Spine book={book} showTitle className={styles.spine} />
                 <span className={styles.slip}>
-                  <span className={styles.name}>{book.borrower}</span>
+                  <span className={styles.slipText}>
+                    <span className={styles.number}>{book.id}</span>
+                    {book.borrower && <span className={styles.name}> · {book.borrower}</span>}
+                  </span>
                 </span>
               </span>
             ))}
