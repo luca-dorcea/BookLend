@@ -27,13 +27,12 @@
 .title {
   flex: 1;
   min-height: 0;
-  padding: 6px 2px;
+  padding: 6px 0;
   overflow: hidden;
   letter-spacing: 0.04em;
-  line-height: 1.05;
+  text-overflow: ellipsis;
   text-transform: lowercase;
-  overflow-wrap: anywhere;
-  hyphens: auto;
+  white-space: nowrap;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
