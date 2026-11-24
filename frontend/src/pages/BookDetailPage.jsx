@@ -48,7 +48,7 @@ export default function BookDetailPage() {
       <div className="sheet">
         <section className="panel">
           <p className="error" data-testid="error">
-            Cartea nu a putut fi încărcată ({error}).
+            Cartea nu a putut fi încărcată: {error}.
           </p>
           <Link to="/" className={styles.back}>
             Înapoi la bibliotecă

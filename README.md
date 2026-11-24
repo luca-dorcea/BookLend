@@ -31,23 +31,21 @@ From stage 5 the sample grows to 30 books: Romanian and world prose
 (novels, novellas, short stories, sketches, a fairy tale, a memoir, a journal), including
 The Hobbit and the three volumes of The Lord of the Rings. Romanian and English titles stay
 in their language, others use the English title; all other text is Romanian.
-From stage 6 the books live in `frontend/db.json` and are served by json-server.
+From stage 6 to stage 8 the books lived in `frontend/db.json`, served by json-server.
+From stage 9 they are served by our own Express API in `backend/`, which starts from the
+list in `backend/src/data.js` and keeps changes in memory until it restarts.
 
 ## How to run
 
-```
-cd frontend
-npm install
-npm run api
-```
-
-Then, in a second terminal, also in `frontend/`:
+Two terminals, one for the API and one for the React app:
 
 ```
-npm run dev
+cd backend && npm install && npm run dev     # terminal 1, port 3001
+cd frontend && npm install && npm run dev    # terminal 2, port 5173
 ```
 
-Open the address printed in the terminal (http://localhost:5173). The API runs on http://localhost:3001.
+Open http://localhost:5173. The API answers on http://localhost:3001 (`/health` shows that it runs).
+The allowed origin and the port can be changed with the variables in `backend/.env.example`.
 The static mockup from stages 1 and 2 is in `mockup/`.
 
 Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.github.io/BookLend/
@@ -57,7 +55,7 @@ Online version, rebuilt by GitHub Actions on every push: https://luca-dorcea.git
 
 | Tool   | Used for                                                          |
 | ------ | ----------------------------------------------------------------- |
-| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5), loading data from a mock API (stage 6), the add form, validation and saving changes to the API (stage 7), routing, the detail page and CSS Modules (stage 8), the visual redesign |
+| Claude | drafting the README, HTML/CSS mockup (stage 1), data functions and console tests (stage 2), React app setup (stage 3), list components (stage 4), state, events, theme toggle, the two lists and book details (stage 5), loading data from a mock API (stage 6), the add form, validation and saving changes to the API (stage 7), routing, the detail page and CSS Modules (stage 8), the visual redesign, the Express backend (stage 9) |
 
 Details per stage: see the `ai-log/` folder.
 
@@ -127,6 +125,31 @@ The look was also reworked before this stage: the shelf at the top draws one spi
 from the data (a lent book leaves a gap with the reader's name), each row has a matching spine,
 and three fonts are bundled with npm, so run `npm install` once after pulling.
 
+## Stage 9: own backend with Express
+
+json-server is gone. The API is an Express server in `backend/`, with REST routes
+for the books, validation on the server, the right HTTP codes and CORS. The data is still
+kept in memory and resets when the server restarts.
+
+| Method | Route        | Answer                                      |
+| ------ | ------------ | ------------------------------------------- |
+| GET    | `/books`     | 200, every book                             |
+| GET    | `/books/:id` | 200, one book; 404 if it does not exist     |
+| POST   | `/books`     | 201, the new book; 400 if the data is wrong |
+| PATCH  | `/books/:id` | 200, the changed book; 400 or 404           |
+| DELETE | `/books/:id` | 204, no body; 404 if it does not exist      |
+
+Every error has the same shape, `{ "error": "..." }`, and the page shows that text.
+Checking the routes with curl (from Git Bash, with the server running):
+
+```
+curl -s -w ' -> %{http_code}\n' http://localhost:3001/books
+curl -s -w ' -> %{http_code}\n' -X POST http://localhost:3001/books -H "Content-Type: application/json" -d '{"title":"Din curl","condition":"worn"}'
+curl -s -w ' -> %{http_code}\n' -X POST http://localhost:3001/books -H "Content-Type: application/json" -d '{"title":""}'
+curl -s -w ' -> %{http_code}\n' http://localhost:3001/books/999
+curl -s -w ' -> %{http_code}\n' -X DELETE http://localhost:3001/books/31
+```
+
 ## Status
 
 - [x] Stage 1: static mockup
@@ -137,7 +160,8 @@ and three fonts are bundled with npm, so run `npm install` once after pulling.
 - [x] Stage 6: data from a mock API
 - [x] Stage 7: form and validation
 - [x] Stage 8: routing and detail page
-- [ ] Stage 9: own backend with Express
+- [x] Stage 9: own backend with Express
+- [ ] Stage 10: MariaDB and full CRUD
 
 ## Stage 1 checklist
 

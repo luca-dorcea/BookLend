@@ -219,7 +219,7 @@ export default function LibraryPage() {
         )}
         {error && (
           <p className={`error ${styles.status}`} data-testid="error">
-            {error} Verifică dacă rulează <code>npm run api</code>.
+            {error} Verifică dacă rulează serverul (<code>npm run dev</code> în <code>backend</code>).
           </p>
         )}
         {!loading && (
